@@ -82,6 +82,7 @@ class Avaliacao
             $indice = collect($notas)->search(fn (array $nota): bool => (int) $nota['avaliador_id'] === $avaliador->id);
             $nova = $this->calcular($atual->subcategoria->categoria->codigo, $dados) + [
                 'avaliador_id' => $avaliador->id,
+                'justificativa_geral' => $dados['justificativa_geral'] ?? null,
                 'justificativas' => array_filter($dados['justificativas'] ?? [], fn ($texto): bool => $texto !== null && $texto !== ''),
             ];
 

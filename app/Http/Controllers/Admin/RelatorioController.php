@@ -88,6 +88,55 @@ class RelatorioController extends Controller
             ->download($arquivo);
     }
 
+    public function equipePdf(Request $request): Response
+    {
+        $dados = $this->dados($request);
+
+        return Pdf::loadView('relatorios.equipe', ['avaliadores' => $dados['avaliadores'], 'agora' => now()])
+            ->setPaper('a4')->download('relatorio-equipe-'.now()->format('Y-m-d').'.pdf');
+    }
+
+    public function avaliador(Request $request, User $avaliador): JsonResponse
+    {
+        $filtros = $request->validate(['page' => ['sometimes', 'integer', 'min:1']]);
+        $dados = $this->fichaAvaliador($avaliador);
+        $pagina = (int) ($filtros['page'] ?? 1);
+        $projetos = $dados['projetos'];
+        $dados['projetos'] = (new LengthAwarePaginator($projetos->forPage($pagina, 10)->values(), $projetos->count(), 10, $pagina, ['path' => $request->url()]))->withQueryString();
+
+        return response()->json($dados);
+    }
+
+    public function avaliadorPdf(User $avaliador): Response
+    {
+        return Pdf::loadView('relatorios.ficha-avaliador', ['ficha' => $this->fichaAvaliador($avaliador), 'agora' => now()])
+            ->setPaper('a4')->download('ficha-avaliador-'.$avaliador->id.'.pdf');
+    }
+
+    private function fichaAvaliador(User $avaliador): array
+    {
+        abort_unless($avaliador->perfil === User::PERFIL_AVALIADOR, 404);
+        $projetos = Projeto::with('subcategoria.categoria')->where(function ($query) use ($avaliador): void {
+            $query->whereJsonContains('avaliador_ids', $avaliador->id)->orWhereJsonContains('avaliador_ids', (string) $avaliador->id);
+        })->orderByDesc('id')->get()->map(function (Projeto $projeto) use ($avaliador): array {
+            $nota = collect($projeto->notas ?? [])->firstWhere('avaliador_id', $avaliador->id);
+
+            return [
+                'id' => $projeto->id, 'nome' => $projeto->nome, 'codigo' => $projeto->codigo,
+                'categoria' => $projeto->subcategoria->categoria->nome, 'categoria_codigo' => $projeto->subcategoria->categoria->codigo,
+                'subcategoria' => $projeto->subcategoria->nome, 'avaliada' => $nota !== null,
+                'minha_nota' => $nota['total'] ?? null, 'minha_habilitacao' => $nota['habilitada'] ?? null,
+            ];
+        });
+        $concluidas = $projetos->where('avaliada', true)->count();
+
+        return [
+            'avaliador' => ['id' => $avaliador->id, 'nome' => $avaliador->name, 'email' => $avaliador->email, 'contato' => $avaliador->contato, 'organizacao' => $avaliador->organizacao, 'ativo' => $avaliador->ativo],
+            'resumo' => ['designados' => $projetos->count(), 'concluidas' => $concluidas, 'pendentes' => $projetos->count() - $concluidas],
+            'projetos' => $projetos,
+        ];
+    }
+
     private function dados(Request $request): array
     {
         $filtros = $request->validate([

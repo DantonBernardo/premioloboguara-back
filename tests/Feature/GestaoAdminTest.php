@@ -121,6 +121,81 @@ class GestaoAdminTest extends TestCase
         $this->actingAs($this->admin())->get('/api/admin/relatorios/pdf?tipo=resultados&status=habilitada')->assertOk();
     }
 
+    public function test_ficha_administrativa_exibe_notas_justificativas_e_pendentes_apenas_para_admin(): void
+    {
+        $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $pendente = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $projeto = Projeto::factory()->create([
+            'avaliador_ids' => [$avaliador->id, $pendente->id],
+            'notas' => [['avaliador_id' => $avaliador->id, 'c1' => 0, 'c2' => 3, 'c3' => 2, 'c4' => 2, 'justificativas' => ['c1' => 'Sem evidências.'], 'justificativa_geral' => 'Análise registrada.']],
+        ]);
+        $url = '/api/admin/projetos/'.$projeto->id;
+        $this->getJson($url)->assertUnauthorized();
+        $this->actingAs($avaliador)->getJson($url)->assertForbidden();
+        $this->actingAs($this->admin())->getJson($url)->assertOk()
+            ->assertJsonPath('projeto.id', $projeto->id)->assertJsonPath('projeto.status', 'inabilitada')
+            ->assertJsonPath('projeto.nota_final', 7)->assertJsonCount(2, 'avaliadores')
+            ->assertJsonPath('avaliadores.0.nome', $avaliador->name)
+            ->assertJsonPath('avaliadores.0.avaliacao.justificativas.c1', 'Sem evidências.')
+            ->assertJsonPath('avaliadores.0.avaliacao.justificativa_geral', 'Análise registrada.')
+            ->assertJsonPath('avaliadores.0.avaliacao.habilitada', false)
+            ->assertJsonPath('avaliadores.1.avaliacao', null)->assertJsonMissingPath('avaliadores.0.password');
+        $this->getJson('/api/admin/projetos/99999999')->assertNotFound();
+        $vazio = Projeto::factory()->create();
+        $this->getJson('/api/admin/projetos/'.$vazio->id)->assertOk()->assertJsonPath('projeto.status', 'sem_avaliacao')->assertJsonPath('projeto.nota_final', null);
+    }
+
+    public function test_pdf_da_ficha_inclui_avaliacoes_e_exige_admin(): void
+    {
+        $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $projeto = Projeto::factory()->create(['avaliador_ids' => [$avaliador->id], 'notas' => [['avaliador_id' => $avaliador->id, 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2, 'justificativa_geral' => 'Análise do projeto.']]]);
+        $url = '/api/admin/projetos/'.$projeto->id.'/pdf';
+        $this->get($url, ['Accept' => 'application/json'])->assertUnauthorized();
+        $this->actingAs($avaliador)->get($url)->assertForbidden();
+        $resposta = $this->actingAs($this->admin())->get($url)->assertOk()->assertHeader('content-type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $resposta->getContent());
+        if ($destino = getenv('FICHA_PDF_PREVIEW')) {
+            file_put_contents($destino, $resposta->getContent());
+        }
+        $this->get('/api/admin/projetos/99999999/pdf')->assertNotFound();
+    }
+
+    public function test_ficha_do_avaliador_pagina_apenas_designacoes_e_pdf_equipe_exige_admin(): void
+    {
+        $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        Projeto::factory()->count(12)->create(['avaliador_ids' => [$avaliador->id]]);
+        Projeto::factory()->create();
+        $url = '/api/admin/avaliadores/'.$avaliador->id;
+        $this->getJson($url)->assertUnauthorized();
+        $this->actingAs($avaliador)->getJson($url)->assertForbidden();
+        $this->getJson('/api/admin/equipe/pdf')->assertForbidden();
+        $this->actingAs($this->admin())->getJson($url)->assertOk()->assertJsonPath('resumo.designados', 12)
+            ->assertJsonPath('resumo.pendentes', 12)->assertJsonCount(10, 'projetos.data')->assertJsonMissingPath('avaliador.password');
+        $this->getJson($url.'?page=2')->assertJsonCount(2, 'projetos.data');
+        $this->getJson($url.'?page=0')->assertUnprocessable();
+        $resposta = $this->get('/api/admin/equipe/pdf')->assertOk()->assertHeader('content-type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $resposta->getContent());
+        if ($destino = getenv('EQUIPE_PDF_PREVIEW')) {
+            file_put_contents($destino, $resposta->getContent());
+        }
+    }
+
+    public function test_pdf_do_avaliador_inclui_designacoes_de_todas_as_paginas(): void
+    {
+        $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        Projeto::factory()->count(12)->create(['avaliador_ids' => [$avaliador->id]]);
+        Projeto::factory()->create(['nome' => 'Projeto de outro avaliador']);
+        $url = '/api/admin/avaliadores/'.$avaliador->id.'/pdf';
+        $this->getJson($url)->assertUnauthorized();
+        $this->actingAs($avaliador)->getJson($url)->assertForbidden();
+        $this->actingAs($this->admin())->getJson('/api/admin/avaliadores/'.$avaliador->id)->assertJsonPath('resumo.designados', 12);
+        $resposta = $this->get($url)->assertOk()->assertHeader('content-type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $resposta->getContent());
+        if ($destino = getenv('AVALIADOR_PDF_PREVIEW')) {
+            file_put_contents($destino, $resposta->getContent());
+        }
+    }
+
     public function test_rotas_de_gestao_sao_restritas_a_administradores_ativos(): void
     {
         foreach (['/api/admin/dashboard', '/api/admin/indicadores', '/api/admin/relatorios', '/api/admin/relatorios/pdf'] as $path) {

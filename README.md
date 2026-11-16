@@ -47,7 +47,7 @@ Conta administrativa inicial: `scti@guarapuava.pr.gov.br`. A senha inicial dos u
 - Critérios e limites estão em `config/avaliacao.php`; categorias e subcategorias em `config/categorias.php`.
 - Projeto Inovador admite bônus de parceria de até 0,5 ponto, respeitando o teto de 10.
 - A habilitação exige média mínima 7 e ausência de zero nos critérios eliminatórios de máximo 3 pontos.
-- Justificativas são opcionais. O avaliador consulta e revisa somente sua própria avaliação.
+- Justificativas são obrigatórias para zero em critério de máximo 3 pontos e para nota total inferior a 5 ou igual a 10; nos demais casos são opcionais. O avaliador consulta e revisa somente sua própria avaliação.
 - O código do projeto combina chave de oito dígitos, categoria e subcategoria, com unicidade no banco.
 
 ## API

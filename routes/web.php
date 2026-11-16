@@ -32,8 +32,13 @@ Route::prefix('api')->group(function () {
         Route::get('/dashboard', DashboardController::class);
         Route::get('/ranking', RankingController::class);
         Route::get('/projetos', [ProjetoController::class, 'index']);
+        Route::get('/projetos/{projeto}', [ProjetoController::class, 'show']);
+        Route::get('/projetos/{projeto}/pdf', [ProjetoController::class, 'pdf']);
         Route::get('/indicadores', [DashboardController::class, 'indicadores']);
         Route::get('/relatorios', [RelatorioController::class, 'index']);
         Route::get('/relatorios/pdf', [RelatorioController::class, 'pdf']);
+        Route::get('/equipe/pdf', [RelatorioController::class, 'equipePdf']);
+        Route::get('/avaliadores/{avaliador}', [RelatorioController::class, 'avaliador']);
+        Route::get('/avaliadores/{avaliador}/pdf', [RelatorioController::class, 'avaliadorPdf']);
     });
 });

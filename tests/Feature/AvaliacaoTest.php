@@ -28,6 +28,7 @@ class AvaliacaoTest extends TestCase
     {
         return array_replace([
             'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2, 'bonus' => 0,
+            'justificativa_geral' => 'Avaliação fundamentada nas evidências apresentadas.',
             'justificativas' => array_fill_keys(['c1', 'c2', 'c3', 'c4'], 'Evidências verificadas no Anexo I.'),
         ], $alteracoes);
     }
@@ -147,7 +148,7 @@ class AvaliacaoTest extends TestCase
         $this->assertNull($projeto->fresh()->nota_final);
     }
 
-    public function test_justificativas_sao_opcionais_inclusive_para_bonus_e_zero_eliminatorio(): void
+    public function test_justificativas_sao_opcionais_exceto_para_zero_eliminatorio(): void
     {
         $usuario = $this->avaliador();
         foreach ([[], null, ['c1' => null, 'bonus' => '']] as $justificativas) {
@@ -159,9 +160,30 @@ class AvaliacaoTest extends TestCase
         $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
         $dados = $this->dados(['c1' => 0]);
         unset($dados['justificativas']);
-        $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.zero_eliminatorio', true);
+        $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativas.c1');
+        $dados['justificativas'] = ['c1' => 'Não apresentou evidências para o critério.'];
+        $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.zero_eliminatorio', true)->assertJsonPath('avaliacao.habilitada', false);
         $this->enviar($projeto, $usuario, $this->dados(['justificativas' => ['c1' => str_repeat('a', 10001)]]))
             ->assertUnprocessable()->assertJsonValidationErrors('justificativas.c1');
+    }
+
+    public function test_totais_extremos_exigem_justificativa_e_cinco_nao_exige(): void
+    {
+        $usuario = $this->avaliador();
+        $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
+        foreach ([[1, 1, 1, 1], [3, 3, 2, 2]] as $valores) {
+            $dados = $this->dados(array_combine(['c1', 'c2', 'c3', 'c4'], $valores));
+            unset($dados['justificativa_geral']);
+            $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
+            $dados['justificativa_geral'] = '   ';
+            $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
+            $dados['justificativa_geral'] = 'Evidências justificam a nota atribuída.';
+            $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.justificativa_geral', $dados['justificativa_geral']);
+            $this->actingAs($usuario)->getJson('/api/avaliador/projetos/'.$projeto->id)->assertJsonPath('avaliacao.justificativa_geral', $dados['justificativa_geral']);
+        }
+        $dados = $this->dados(['c1' => 2, 'c2' => 1, 'c3' => 1, 'c4' => 1]);
+        unset($dados['justificativa_geral'], $dados['justificativas']);
+        $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.total', 5);
     }
 
     public function test_nomes_descricoes_e_pesos_sao_identicos_a_aba_criterios_e_rubricas(): void

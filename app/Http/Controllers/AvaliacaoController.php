@@ -55,6 +55,7 @@ class AvaliacaoController extends Controller
                 'categoria_codigo' => $projeto->subcategoria->categoria->codigo,
                 'subcategoria' => $projeto->subcategoria->nome,
                 'avaliada' => $nota !== null, 'minha_nota' => $nota['total'] ?? null,
+                'minha_habilitacao' => $nota['habilitada'] ?? null,
             ];
         });
 

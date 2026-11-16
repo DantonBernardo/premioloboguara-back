@@ -3,14 +3,64 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Projeto;
+use App\Models\User;
+use App\Services\Avaliacao;
+use App\Services\Relatorios;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ProjetoController extends Controller
 {
+    public function show(Projeto $projeto, Avaliacao $avaliacao): JsonResponse
+    {
+        return response()->json($this->ficha($projeto, $avaliacao));
+    }
+
+    public function pdf(Projeto $projeto, Avaliacao $avaliacao): Response
+    {
+        return Pdf::loadView('relatorios.ficha-projeto', ['ficha' => $this->ficha($projeto, $avaliacao), 'agora' => now()])
+            ->setPaper('a4')->download('ficha-projeto-'.$projeto->id.'.pdf');
+    }
+
+    private function ficha(Projeto $projeto, Avaliacao $avaliacao): array
+    {
+        $categoria = $projeto->subcategoria->categoria;
+        $notas = collect($avaliacao->normalizar($categoria->codigo, $projeto->notas ?? []))->keyBy('avaliador_id');
+        $ids = collect($projeto->avaliador_ids ?? [])->merge($notas->keys())->map(fn ($id): int => (int) $id)->unique()->values();
+        $usuarios = User::whereIn('id', $ids)->get(['id', 'name', 'organizacao'])->keyBy('id');
+        $zero = $notas->contains('zero_eliminatorio', true);
+        $status = match (true) {
+            $zero => 'inabilitada',
+            $notas->isEmpty() => 'sem_avaliacao',
+            $notas->count() < 3 => 'em_avaliacao',
+            $projeto->nota_final >= config('avaliacao.nota_corte') => 'habilitada',
+            default => 'inabilitada',
+        };
+
+        return [
+            'projeto' => [
+                'id' => $projeto->id, 'codigo' => $projeto->codigo, 'nome' => $projeto->nome,
+                'categoria' => $categoria->nome, 'categoria_codigo' => $categoria->codigo,
+                'subcategoria' => $projeto->subcategoria->nome,
+                'nota_final' => $projeto->nota_final, 'avaliacoes_recebidas' => $notas->count(),
+                'status' => $status, 'status_rotulo' => Relatorios::STATUS[$status],
+                'zero_eliminatorio' => $zero, 'criado_em' => $projeto->created_at?->toIso8601String(),
+            ],
+            'regras' => $avaliacao->criterios($categoria->codigo),
+            'avaliadores' => $ids->map(fn (int $id): array => [
+                'id' => $id, 'nome' => $usuarios[$id]->name ?? 'Avaliador indisponível',
+                'organizacao' => $usuarios[$id]->organizacao ?? null,
+                'avaliacao' => $notas->get($id),
+            ]),
+        ];
+    }
+
     public function index(Request $request): JsonResponse
     {
         $filtros = $request->validate([
