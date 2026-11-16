@@ -1,0 +1,142 @@
+[
+  {
+    "categoria": "Pesquisador Inovador",
+    "codigo": "c1",
+    "nome": "Relevância / Originalidade",
+    "descricao": "Ineditismo da investigação frente ao estado da arte; relevância do problema investigado; contribuição conceitual para a fronteira do conhecimento e desafios locais de Guarapuava.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Pesquisador Inovador",
+    "codigo": "c2",
+    "nome": "Metodologia",
+    "descricao": "Rigor técnico-científico do delineamento experimental ou teórico; clareza nas hipóteses; métodos de coleta/análise; conformidade com normas éticas (CEP/CEUA).",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Pesquisador Inovador",
+    "codigo": "c3",
+    "nome": "Resultados",
+    "descricao": "Solidez e consistência dos achados; validade dos dados estatísticos, protótipos, patentes ou publicações; coerência entre dados obtidos e conclusões.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Pesquisador Inovador",
+    "codigo": "c4",
+    "nome": "Potencial de Aplicação",
+    "descricao": "Capacidade de transferência de tecnologia para mercado ou setor público local; facilidade de implementação em Guarapuava e desdobramentos práticos.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Pesquisador Inovador",
+    "codigo": "bonus",
+    "nome": "Bônus de Parcerias",
+    "descricao": "Critério de bônus exclusivo da categoria Projeto Inovador (Não aplicável a Pesquisador Inovador).",
+    "maximo": 0.0
+  },
+  {
+    "categoria": "Professor Inovador",
+    "codigo": "c1",
+    "nome": "Criatividade / Inovação",
+    "descricao": "Originalidade da prática pedagógica frente às rotinas tradicionais; pioneirismo em atividades lúdicas, interdisciplinares ou dinâmicas no ambiente escolar.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Professor Inovador",
+    "codigo": "c2",
+    "nome": "Impacto na Aprendizagem",
+    "descricao": "Evidências concretas de melhoria da aprendizagem, engajamento e protagonismo; desenvolvimento socioemocional/cognitivo; mitigação de evasão e sucesso escolar.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Professor Inovador",
+    "codigo": "c3",
+    "nome": "Replicabilidade",
+    "descricao": "Viabilidade técnica, operacional e orçamentária para que a prática seja transferida, adaptada e adotada por outros educadores ou escolas de Guarapuava.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Professor Inovador",
+    "codigo": "c4",
+    "nome": "Tecnologias / Metodologias",
+    "descricao": "Uso estruturado de metodologias ativas (sala invertida, gamificação, cultura maker, PBL) e integração de recursos tecnológicos ao processo pedagógico.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Professor Inovador",
+    "codigo": "bonus",
+    "nome": "Bônus de Parcerias",
+    "descricao": "Critério de bônus exclusivo da categoria Projeto Inovador (Não aplicável a Professor Inovador).",
+    "maximo": 0.0
+  },
+  {
+    "categoria": "Projeto Inovador",
+    "codigo": "c1",
+    "nome": "Grau de Inovação",
+    "descricao": "Nível de novidade (incremental ou disruptiva) do produto, processo ou serviço frente ao mercado e contexto socioeconômico regional; tecnologia própria/modelo novo.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Projeto Inovador",
+    "codigo": "c2",
+    "nome": "Impacto para Guarapuava",
+    "descricao": "Benefícios socioeconômicos ou ambientais gerados para Guarapuava: empregos qualificados, atração de investimentos, digitalização de serviços e conexão do ecossistema.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Projeto Inovador",
+    "codigo": "c3",
+    "nome": "Viabilidade / Maturidade",
+    "descricao": "Estágio de maturação (TRL, protótipo funcional, produto no mercado); robustez do modelo de governança, sustentabilidade econômico-financeira e capacidade de execução.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Projeto Inovador",
+    "codigo": "c4",
+    "nome": "Qualidade da Apresentação",
+    "descricao": "Clareza, coerência lógica e qualidade da escrita técnica do Anexo I; apresentação de indicadores de desempenho sólidos; dados e anexos fundamentados.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Projeto Inovador",
+    "codigo": "bonus",
+    "nome": "Bônus de Parcerias",
+    "descricao": "Parcerias comprovadas com o ecossistema de C,T&I de Guarapuava (Art. 15, § 2º, IV). Pontuação adicional de até +0,5 ponto, respeitado o teto de 10,0.",
+    "maximo": 0.5
+  },
+  {
+    "categoria": "Mulher Inovadora",
+    "codigo": "c1",
+    "nome": "Grau de Inovação",
+    "descricao": "Originalidade, sofisticação da solução proposta e diferenciais competitivos do modelo, projeto ou tecnologia desenvolvida sob liderança feminina.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Mulher Inovadora",
+    "codigo": "c2",
+    "nome": "Impacto da Inovação",
+    "descricao": "Resultados mensuráveis sob liderança feminina; equidade de gênero em C,T&I; benefícios sociais, econômicos, educacionais ou ambientais entregues ao município.",
+    "maximo": 3.0
+  },
+  {
+    "categoria": "Mulher Inovadora",
+    "codigo": "c3",
+    "nome": "Viabilidade / Maturidade",
+    "descricao": "Nível de prontidão da iniciativa em Guarapuava; robustez das operações, escalabilidade e capacidade de tração da gestão liderada pela proponente.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Mulher Inovadora",
+    "codigo": "c4",
+    "nome": "Qualidade da Apresentação",
+    "descricao": "Estruturação e rigor técnico no Resumo Expandido (Anexo I); consistência entre problema, metodologia e resultados; evidências objetivas e clareza.",
+    "maximo": 2.0
+  },
+  {
+    "categoria": "Mulher Inovadora",
+    "codigo": "bonus",
+    "nome": "Bônus de Parcerias",
+    "descricao": "Critério de bônus exclusivo da categoria Projeto Inovador (Não aplicável a Mulher Inovadora).",
+    "maximo": 0.0
+  }
+]
