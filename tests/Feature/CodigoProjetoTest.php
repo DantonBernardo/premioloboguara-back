@@ -158,20 +158,20 @@ class CodigoProjetoTest extends TestCase
         $this->getJson('/api/avaliador/projetos/por-codigo/'.$projeto->chave.'/1/1')->assertNotFound();
     }
 
-    public function test_seed_de_duzentos_projetos_preserva_codigos_e_avaliacoes_ao_reexecutar(): void
+    public function test_seed_de_projetos_reais_preserva_codigos_e_avaliacoes_ao_reexecutar(): void
     {
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 200);
-        $this->assertSame(200, Projeto::distinct()->count('chave'));
+        $this->assertDatabaseCount('projetos', 147);
+        $this->assertSame(147, Projeto::distinct()->count('chave'));
         foreach (Projeto::with('subcategoria.categoria')->get() as $item) {
             $this->assertMatchesRegularExpression('/^[0-9]{8}$/', $item->chave);
             $this->assertSame($item->chave.'/'.$item->subcategoria->categoria->codigo.'/'.$item->subcategoria->codigo, $item->codigo);
         }
         $codigos = Projeto::orderBy('id')->pluck('codigo', 'id')->all();
         $projeto = Projeto::firstOrFail();
-        $projeto->update(['notas' => [['avaliador_id' => 1, 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2]]]);
+        $projeto->update(['notas' => [['avaliador_id' => $projeto->avaliador_ids[0], 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2]]]);
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 200);
+        $this->assertDatabaseCount('projetos', 147);
         $this->assertSame($codigos, Projeto::orderBy('id')->pluck('codigo', 'id')->all());
         $this->assertCount(1, $projeto->fresh()->notas);
         $this->assertEquals(8, $projeto->fresh()->nota_final);

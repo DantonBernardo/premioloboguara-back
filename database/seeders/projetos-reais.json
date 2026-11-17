@@ -1,0 +1,918 @@
+{
+  "grupos": {
+    "I": [
+      "Bruna Nadal",
+      "Daniel Leipnitz",
+      "Patricia Salvação"
+    ],
+    "III": [
+      "Andrea Alves Vieira",
+      "Eduardo Akira Azuma",
+      "Gustavo Oliveira Acosta"
+    ],
+    "IV": [
+      "Aline Malherdi",
+      "Gustavo Comeli",
+      "Renato Maçaneiro"
+    ],
+    "V": [
+      "Cesar Antonio Bitencourt",
+      "Marcos Pelegrina",
+      "Paulo Alvim"
+    ],
+    "VI": [
+      "Elisangela Rosa",
+      "Leonel Rodrigues",
+      "Rosiclei Caldato Dalagnol"
+    ],
+    "VII": [
+      "Carlos Alberto Facco",
+      "Rafael Luz",
+      "Thiago Marcelino"
+    ]
+  },
+  "projetos": [
+    {
+      "nome": "MULHER INOVADORA NA PISCICULTURA  MAIS QUE PEIXES, UMA HISTÓRIA DE VIDA   A CORAGEM DE UMA MULHER QUE APRENDEU A INOVAR SEM DEIXAR DE ACREDITAR - PISCICULTURA KRÜGER",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "REVISTA VISUAL",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "IMERSÃO PEGA LEVE",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "BUSINESS DAY - ACIG MULLHER",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "I"
+    },
+    {
+      "nome": "CLUBE YELULU: INOVAÇÃO ORGANIZACIONAL PARA O PROTAGONISMO FEMININO, DESENVOLVIMENTO DE NEGÓCIOS E EXPERIÊNCIAS EM GUARAPUAVA",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "I"
+    },
+    {
+      "nome": "FLORESTA NA PALMA DA MÃO",
+      "categoria": 4,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "PRODUÇÃO DE ETANOL A PARTIR DO RESÍDUO DA EXTRAÇÃO DE ÓLEO DA SEMENTE DE SG",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "PROPOSTA DE MINUTA PARA O REGULAMENTO DO NÚCLEO DE INOVAÇÃO TECNOLÓGICA DO CENTRO UNIVERSITÁRIO CAMPO REAL",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "INTERSECCIONALIDADE E INVISIBILIDADE: UM MAPEAMENTO DAS PESQUISAS SOBRE MULHERES NEGRAS SURDAS",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "DIREITO, PODER E DISCURSO JURÍDICO CONTEMPORÂNEO_ FUNDAMENTOS TEÓRICOS, BIOPOLÍTICA E GARANTIAS FUNDAMENTAIS EM TEMPOS DE CRISE",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "ASSISTIVE OS: SISTEMA EMBARCADO DE COMUNICAÇÃO  AUMENTATIVA E ALTERNATIVA COM RASTREAMENTO OCULAR PARA ADULTOS PÓS-AVC",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "I"
+    },
+    {
+      "nome": "MUITO ALÉM DE BRINCAR: A INOVAÇÃO NAS MÃOS DAS CRIANÇAS",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "CORES, NÚMEROS E PIXELS: BRINCANDO E APRENDENDO COM O PENSAMENTO COMPUTACIONAL",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "PROJETO ECOFORMADOR CORRIDA MALUCA: MATEMÁTICA, FÍSICA, CRIATIVIDADE E PROTAGONISMO ESTUDANTIL SOBRE QUATRO RODAS",
+      "categoria": 2,
+      "subcategoria": 4,
+      "grupo": "I"
+    },
+    {
+      "nome": "SHARKTECH: CONSTRUÇÃO E APLICAÇÃO DE UMA METODOLOGIA ATIVA PARA O ENSINO DE EMPREENDEDORISMO NOS CURSOS DE ENGENHARIA DA UTFPR - CAMPUS GUARAPUAVA",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "I"
+    },
+    {
+      "nome": "DO ALIENÍGENA À MIA: UMA PROPOSTA DE EDUCAÇÃO PARA O USO CONSCIENTE DA INTELIGÊNCIA ARTIFICIAL NO ENSINO FUNDAMENTAL I",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "OUTUBRO ROSA: CUIDADO COM MULHERES COM DEFICIÊNCIA INTELECTUAL.",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "PEDRA, PAPEL E TESOURA: DESENVOLVIMENTO DE UM JOGO ROBÓTICO INTERATIVO COM MICROBIT",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "DEMOCRATIZAÇÃO DA TECNOLOGIA SEM CÓDIGO: UMA EXPERIÊNCIA PEDAGÓGICA NA FORMAÇÃO DE PROFISSIONAIS DA SAÚDE",
+      "categoria": 2,
+      "subcategoria": 6,
+      "grupo": "I"
+    },
+    {
+      "nome": "DESTILARIA DE ÁLCOOL A PARTIR DA BATATA REFUGO",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "I"
+    },
+    {
+      "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "SEMAFORO INTELIGENTE",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "I"
+    },
+    {
+      "nome": "BATALHA DE STARTUPS - O ENCONTRO DAS INCUBADAS: FOMENTO À INOVAÇÃO E INTEGRAÇÃO DAS INCUBADORAS DE GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "I"
+    },
+    {
+      "nome": "CITOM-C – PLATAFORMA DE INTERMEDIAÇÃO INTELIGENTE DE CRÉDITO RURAL",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "I"
+    },
+    {
+      "nome": "GUARÁ-APP",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "I"
+    },
+    {
+      "nome": "PROJETO TECNOLOGIA QUE TRANSFORMA - EMPREENDEDORISMO 3D/C.ARTE3D",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "LOW PETIT CHOCOLATES SAUDÁVEIS BEAN-TO-BAR",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "CASA DO ARTESANATO",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "AVALIAÇÃO DA ATIVIDADE ANTIMICROBIANA E ANTIBIOFILME DE EXTRATO AQUOSO DE ILLEX PARAGUARIENSIS E NANOPARTÍCULAS DE PRATA PARA APLICAÇÃO EM FERIDAS CRÔNICAS",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "DO PROJETO-PILOTO AO ECOSSISTEMA DE INOVAÇÃO: PROTAGONISMO FEMININO NA EXPANSÃO DA ROBÓTICA EDUCACIONAL EM GUARAPUAVA E REGIÃO",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "MAURA – PLATAFORMA DE GESTÃO DE CUSTOS",
+      "categoria": 4,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "TECNOLOGIA E INTENSIFICAÇÃO DO TRABALHO:  A INFLUÊNCIA DO WHATSAPP NA ROTINA DOS PROFESSORES EM  CARGOS DE CHEFIA NA UNICENTRO",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "SUBSTITUIÇÃO DE MADEIRA DE ALTA DURABILIDADE POR POLÍMERO RECICLADO EM BATENTES: UMA ABORDAGEM EXPERIMENTAL E APLICADA",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "OFFLOADING COGNITIVO MEDIADO POR IA GENERATIVA NO ENSINO SUPERIOR",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "A INTERSEÇÃO ENTRE COMPREENSÃO LEITORA E ROBÓTICA : UM ESTUDO SOBRE O PROCESSO INFERENCIAL",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "APLICAÇÃO DA INTELIGÊNCIA ARTIFICIAL NA TRIAGEM AUDITIVA DE ALUNOS DO CENTRO UNIVERSITÁRIO CAMPO REAL",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "A LEVEZA DAS PEDRAS",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "A LINHA DO TEMPO DAS NOSSAS CONEXÕES: DO RÁDIO AO ROBÔ NA GUARAPUAVA DO FUTURO.",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "RACIOCÍNIO CLÍNICO PARA INICIANTES NA EDUCAÇÃO MÉDICA: DESENVOLVIMENTO DE HABILIDADES E AVALIAÇÃO EM COMPARAÇÃO COM ESPECIALISTAS E INTELIGÊNCIA ARTIFICIAL",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "III"
+    },
+    {
+      "nome": "TEXTO QUE TODOS PODEM LER E COMPREENDER: MÉTODO DE FÁCIL LEITURA PARA ESTUDANTES COM DEFICIÊNCIA INTELECTUAL COM DE",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "III"
+    },
+    {
+      "nome": "“RAÍZES QUE INSPIRAM: IDENTIDADE, CRIATIVIDADE E PROTAGONISMO”",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "JOGOS DIGITAIS NOS ANOS INICIAIS DO ENSINO FUNDAMENTAL: REFLEXÕES SOBRE UMA VIVÊNCIA NA CLASSE ESPECIAL.",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "DESENVOLVIMENTO DE INICIAÇÃO CIENTIFICA COM ALUNOS DE AH/SD- ROBÔ HEAREN",
+      "categoria": 2,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "INSTITUTO COGO REIS",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "PSICO – SIMULADOR DE ATENDIMENTO PSICOLÓGICO COM INTELIGÊNCIA ARTIFICIAL LOCAL PARA A FORMAÇÃO EM PSICOLOGIA",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "III"
+    },
+    {
+      "nome": "CRIAÇÃO DA AEPAPA",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "SONAVER",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "III"
+    },
+    {
+      "nome": "ORNADA EDUCATECH: FOMENTO À CULTURA DE CIÊNCIA, TECNOLOGIA, EMPREENDEDORISMO E INOVAÇÃO NA EDUCAÇÃO DE GUARAPUAVA E REGIÃO",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "III"
+    },
+    {
+      "nome": "CONECTA-SUS / INTERPRONT: PRONTUÁRIO ELETRÔNICO INTERDISCIPLINAR E A CONSTRUÇÃO DE INFRAESTRUTURA DIGITAL PARA A SAÚDE",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "ANÁLISE DE VIABILIDADE ECONÔMICA FINANCEIRA E DE RISCO PARA MICRO E PEQUENOS EMPREENDIMENTOS: ESTUDO DE CASO NO RAMO ALIMENTÍCIO COM AUXÍLIO COMPUTACIONAL",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "III"
+    },
+    {
+      "nome": "TECENDO ELAS",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "GISELLE KIDS",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "GUARAPUAVA360/GRUPO360/ LP ASSESSORIA E MKT DIGITAL",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "POD NÃO POD: PROTAGONISMO JUVENIL, COMUNICAÇÃO DIGITAL E ARTICULAÇÃO INTERSETORIAL NA PREVENÇÃO AO USO DE CIGARROS ELETRÔNICOS EM GUARAPUAVA",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "GRUPO ENTRE NÓS",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "MAPEAMENTO DO POTENCIAL DE GERAÇÃO DE ESCOAMENTO (MÉTODO SCS-CN) EM GUARAPUAVA - PR",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "BATERIA DE CALOR: O DESENVOLVIMENTO DA PISCICULTURA NA REGIÃO CENTRO-SUL DO PARANÁ",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "MODELAGEM E OTIMIZAÇÃO DAS PROPRIEDADES DE MATERIAIS CIMENTÍCIOS CONTENDO RESÍDUOS INDUSTRIAIS",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "A EXTENSÃO UNIVERSITÁRIA E PRODUÇÃO DE SENTIDOS: EXPERIÊNCIAS DE MULHERES DA UNICENTRO (2019 A 2024)",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "MORADA: NÚCLEO DE ESTUDOS URBANOS E DA HABITAÇÃO",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "ALTERAÇÕES MORFOLÓGICAS EM TRYPOXYLON OPACUM (HYMENOPTERA; CRABRONIDAE) DECORRENTES DA URBANIZAÇÃO NO PARQUE NATURAL MUNICIPAL DAS ARAUCÁRIAS",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "ECO SACOLA   (PROJETO DESENVOLVIDO EM 2023)",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "EXPLORANDO OS SEGREDOS DA NATUREZA",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "SAFARI BUSINESS GAME",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "IV"
+    },
+    {
+      "nome": "CENTRO DE INVESTIGAÇÃO, INTERVENÇÃO EM EDUCAÇÃO, DESPORTO E BEM-ESTAR (CIIDEBE)",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "IV"
+    },
+    {
+      "nome": "FEIRA DE EMPREENDEDORISMO DAS MULHERES DO BAIRRO",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "ALÉM DAS PÁGINAS DA LEITURA VIVENCIADA À AUTORIA DIGITAL",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "3º EXPOARTE - ARTE E VERSOS",
+      "categoria": 2,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "SABIÁ DATA LAKE: UMA INICIATIVA CRIADA EM GUARAPUAVA PARA TRANSFORMAR DADOS EM INTELIGÊNCIA, INOVAÇÃO E VALOR PÚBLICO EM SAÚDE.",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "IV"
+    },
+    {
+      "nome": "VIVEIRO DA CIDADE DOS LAGOS: INOVAÇÃO NA GESTÃO AMBIENTAL E SUSTENTABILIDADE URBANA",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "UM ESPAÇO DE SENTIDOS, ACOLHIMENTO E INCLUSÃO",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "IV"
+    },
+    {
+      "nome": "STARTUP WEEKEND GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "IV"
+    },
+    {
+      "nome": "PLANEJA GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "IV"
+    },
+    {
+      "nome": "PLANTON - ESCALAS DE PLANTÃO",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "GUARAPUAVA DIGITAL",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "IV"
+    },
+    {
+      "nome": "PANIFICADORA DE ECONOMIA SOLIDÁRIA CRESCER",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "REDE DE NEGÓCIOS GUARAPUAVA",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "PERFUMARI: INOVAÇÃO NA EXPERIÊNCIA OLFATIVA E EXPANSÃO DO VAREJO E ATACADO AO BRASIL",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "E AI BORA INOVACAO EM ERVA MATE",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "V"
+    },
+    {
+      "nome": "POR ONDE QUEREMOS ANDAR: LIBERDADE E SEGURANÇA NOS TRAJETOS COTIDIANOS.",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "V"
+    },
+    {
+      "nome": "CIDADE EM JOGO: DESENVOLVIMENTO DE UM JOGO DIGITAL COOPERATIVO PARA A EDUCAÇÃO URBANA E CIDADÃ DE CRIANÇAS EM GUARAPUAVA (PR)",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "V"
+    },
+    {
+      "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "EXPLORANDO A ENTOMOLOGIA A PARTIR DO MODELO INSTRUCIONAL 5E: PROPOSTA DE ENSINO DE CIÊNCIAS POR INVESTIGAÇÃO NOS ANOS INICIAIS",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "SOILFUTURES-BR: BIAS-CORRECTED SOIL TEMPERATURE PROJECTIONS FOR BRAZIL",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "O COLAPSO ECONÔMICO NA VENEZUELA E SEUS IMPACTOS NO SISTEMA CARCERÁRIO DO ESTADO DE RORAIMA",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "REDÁRIO LITERÁRIO: LEITURA, IMAGINAÇÃO, ACOLHIMENTO, NATUREZA E VÍNCULOS NA EDUCAÇÃO INFANTIL",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "NA DEMOCRACIA DECIDE A MAIORIA",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "QUÍMICA POR TRÁS DOS RÓTULOS",
+      "categoria": 2,
+      "subcategoria": 4,
+      "grupo": "V"
+    },
+    {
+      "nome": "USO DO GEOPROCESSAMENTO E TECNOLOGIAS GEOSPACIAIS NA INVESTIGAÇÃO DE PROBLEMAS SOCIOAMBIENTAIS URBANOS: UMA PRÁTICA PEDAGÓGICA INOVADORA NA FORMAÇÃO EM ENGENHARIA CIVIL NA UTFPR GUARAPUAVA",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "V"
+    },
+    {
+      "nome": "ESCAPE ROOM CLÍNICO EM DISTÚRBIOS ÁCIDO-BASE_ GAMIFICAÇÃO E SIMULAÇÃO CLÍNICA PARA O DESENVOLVIMENTO DO RACIOCÍNIO E DA TOMADA DE DECISÃO NO ENSINO MÉDICO",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "V"
+    },
+    {
+      "nome": "PASSAPORTE DOS PEQUENOS POETAS: TECNOLOGIA E LITERATURA NO ACOMPANHAMENTO DA ALFABETIZAÇÃO NO 1º ANO DO ENSINO FUNDAMENTAL",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "MOSTRA LITERÁRIA TERRITÓRIO DA LEITURA DO RIO AO LIVRO: SUSTENTABILIDADE, ENERGIA E A MAGIA DA BOLSA VERMELHA DE JÚLIA",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "PROJETO PASTORAL DA EDUCAÇÃO - INOVAÇÃO SOCIAL E APOIO PEDAGÓGICO NA PARÓQUIA NOSSA SENHORA DO PERPÉTUO SOCORRO",
+      "categoria": 2,
+      "subcategoria": 3,
+      "grupo": "V"
+    },
+    {
+      "nome": "MERCADO DE ECONOMIA SOLIDÁRIA PRODUTOS DA TERRA",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "V"
+    },
+    {
+      "nome": "EDUCAÇÃO E PREVENÇÃO DA VIOLÊNCIA NO AMBIENTE ESCOLAR: UMA PARCERIA ENTRE ESCOLA O O NÚCLEO MARIA DA PENHA DE GUARAPUAVA-PR",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "ABRASEL NOS BAIRROS",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "V"
+    },
+    {
+      "nome": "PROJETO TECNOLOGIA QUE TRANSFORMA - EMPREENDEDORISMO 3D/C.ARTE3D",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "V"
+    },
+    {
+      "nome": "CILLA TECH & INNOVATION SUMMIT 2026: ARTICULAÇÃO ENTRE CIÊNCIA, TECNOLOGIA, INOVAÇÃO E DESENVOLVIMENTO REGIONAL",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "V"
+    },
+    {
+      "nome": "AIMEDY - TRIAGEM MÉDICA INTELIGENTE",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "V"
+    },
+    {
+      "nome": "FLORESTA HEARTLAND — MODELO INTEGRADO DE CUIDADO E TURISMO RESTAURATIVO SAÚDE, BEM-ESTAR, NATUREZA E INOVAÇÃO SOCIAL.",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "JO MODAS – EMPREENDEDORISMO FEMININO E PRODUÇÃO DE EVENTOS.",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "CLINICA VITTA",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "MEET IN BAR – MULHERES NO PROTAGONISMO DA INOVAÇÃO E EMPREENDEDORISMO",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "VI"
+    },
+    {
+      "nome": "DESIGNER DO SELO OURO",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "VI"
+    },
+    {
+      "nome": "MAPEAMENTO DE ÁREAS DE SUSCETIBILIDADE A MOVIMENTOS DE MASSA NO MUNICÍPIO DE GUARAPUAVA-PR",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "VI"
+    },
+    {
+      "nome": "SISTEMA BIOMINERALIZADOR DE PURIFICAÇÃO DE EFLUENTES  INDUSTRIAIS",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "O USO DE PLATAFORMA DIGITAL PARA CAPACITAÇÃO DE PROFESSORES MUNICIPAIS NA IMPLEMENTAÇÃO DOS 18 ODS: UMA PESQUISA-AÇÃO EM UMA ESCOLA MUNICIPAL DE GUARAPUAVA – PR",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "SENSORIAMENTO DISTRIBUÍDO BASEADO NOS EFEITOS RAMAN E BRILLOUIN PARA MONITORAMENTO DE BARRAGENS",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "A ARQUITETURA EM MADEIRA DE GUARAPUAVA, PR (1930-1980): PATRIMÔNIO, MEMÓRIA E IDENTIDADE",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "SINALIZANDO TECNOLOGIAS: CONECTANDO MÃOS, MENTES E FUTUROS NA EDUCAÇÃO  BILÍNGUE DE SURDOS",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "PROJETO CADA GESTO EDUCA: PEQUENOS JARDINEIROS DO AMANHÃ",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "LITERATURA EM MOVIMENTO: RELEITURAS CRIATIVAS DAS OBRAS DOS VESTIBULARES POR MEIO DE HQS, FANZINES E FOLHETINS",
+      "categoria": 2,
+      "subcategoria": 4,
+      "grupo": "VI"
+    },
+    {
+      "nome": "PLATAFORMA WEB GAMIFICADA PARA O ENSINO-APRENDIZAGEM DE CIÊNCIAS  CONTÁBEIS: “CARDÁPIO CONTÁBIL”",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "VI"
+    },
+    {
+      "nome": "DIÁLOGOS DE EXTENSÃO",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "VI"
+    },
+    {
+      "nome": "TECNOLOGIA, CONECTANDO CAMPO E CIDADE",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "FEIRA MAKER: CRIAR, EXPERIMENTAR E APRENDER FAZENDO",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "GUARAPUAVA EM PRETO E BRANCO: PAISAGENS DE 2026",
+      "categoria": 2,
+      "subcategoria": 3,
+      "grupo": "VI"
+    },
+    {
+      "nome": "DESENVOLVIMENTO E AVALIAÇÃO DE NANOFORMULAÇÕES CONTENDO PROPARGILAMINAS PARA A CICATRIZAÇÃO DE FERIDAS HUMANAS E ANIMAIS: INOVAÇÃO SUSTENTÁVEL EM SAÚDE ÚNICA",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "VI"
+    },
+    {
+      "nome": "PLANALTO ATIVO – UBS PLANALTO",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "GRUPO DE IDOSOS LOBOS ETERNOS 55+",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "VI"
+    },
+    {
+      "nome": "GERAÇÃO INOVADORA: ESCOLAS CONECTADAS AO ECOSSISTEMA DE INOVAÇÃO DE GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "VI"
+    },
+    {
+      "nome": "APOIO AO LABORATÓRIO DE PESQUISA EMPRESA ESCOLA DA UNICENTRO",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "VI"
+    },
+    {
+      "nome": "PEGA EMPREITA",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "VI"
+    },
+    {
+      "nome": "FEIRA MENSAL DA SECRETARIA DA MULHER",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "INCLUIR MAIS SAÚDE",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "SENSTECH",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "KETHER - COROA DA LIBERDADE EM FIOS - POLICIA PENAL",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "VII"
+    },
+    {
+      "nome": "MUITO ALÉM DAS RÉDEAS UMA EXPERIÊNCIA QUE TRANSFORMA VIDAS",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "VII"
+    },
+    {
+      "nome": "DA INCUBADORA ÀS COOPERATIVAS: DIAGNÓSTICO E GESTÃO DA MATURIDADE EM INOVAÇÃO A PARTIR DE GUARAPUAVA (2021–2026)",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "RASTREAMENTO DE HIPERTENSÃO ARTERIAL NA POPULAÇÃO ADOLESCENTE: TECNOLOGIA PARA O CUIDADO DE ENFERMAGEM EM ATENÇÃO PRIMÁRIA",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "SISTEMA DE ALERTA PARA IDENTIFICAR HIPERUSUÁRIOS COM CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA À SAÚDE EM SERVIÇOS DE PRONTO ATENDIMENTO",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "MITO E LINGUAGEM — ÉDIPO EM SÓFOCLES E NATÁLIA CORREIA",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "AVALIAÇÃO DO DESEMPENHO À COMPRESSÃO DE MATRIZ CIMENTÍCIA COM ADIÇÃO DE MICROPARTÍCULAS DE ALUMINA",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "VII"
+    },
+    {
+      "nome": "NOSSA HORTA",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "PROJETO ECOTOY: EMPREENDEDORISMO SUSTENTÁVEL PARA CRIANÇAS",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "SESI AMIGO & SESI AMIGA: DA CIÊNCIA À AÇÃO  PROTAGONISMO JUVENIL, EDUCAÇÃO MAKER E TRANSFORMAÇÃO SOCIAL PELA MEDIAÇÃO DOCENTE",
+      "categoria": 2,
+      "subcategoria": 4,
+      "grupo": "VII"
+    },
+    {
+      "nome": "QND A ENGENHARIA SAI DA PRANCHETA E VAI PARA A CHURRASQUEIRA",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "VII"
+    },
+    {
+      "nome": "ESTUDO DOS TIPOS DE SOLOS À HIDROPONIA: UMA EXPERIÊNCIA INTERDISCIPLINAR COM ALUNOS DO 3º ANO DA ESCOLA MUNICIPAL PEDRO ITARARÉ",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "EU NÃO FALTEI E ME DESTAQUEI! COM SOL E CHUVA PARA A ESCOLA EU VOU",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "CARTAS PARA O MEU BAIRRO: DESCOBRINDO GUARAPUAVA COM OLHOS DE PESQUISADOR",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "QUANDO O PROFESSOR VIRA ALUNO: PENSAMENTO COMPUTACIONAL, COMUNICAÇÃO E APRENDIZAGEM PELA EXPERIÊNCIA NA FORMAÇÃO DOCENTE",
+      "categoria": 2,
+      "subcategoria": 6,
+      "grupo": "VII"
+    },
+    {
+      "nome": "AVALIAÇÃO PRÉ-CLÍNICA DE UMA VACINA TERAPÊUTICA MULTIVALENTE BASEADA EM RNA MENSAGEIRO (MRNA), DIRECIONADA A ANTÍGENOS ASSOCIADOS A TUMORES SUPEREXPRESSOS EM TUMORES / IPEC",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "VII"
+    },
+    {
+      "nome": "OLHAR PARA O FUTURO",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "GUARAPUAVA À MESA: HISTÓRIAS E SABORES / INSTITUTO HISTÓRICO E GEOGRÁFICO DE GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "VII"
+    },
+    {
+      "nome": "PREFEITURA MUNICIPAL DE GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "VII"
+    },
+    {
+      "nome": "GEOGUARAPUAVA - PLATAFORMA CORPORATIVA DE INTELIGÊNCIA TERRITORIAL",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "VII"
+    },
+    {
+      "nome": "AGRATEC LTDA - SISTEMA INTELIGENTE DE ANÁLISE DE SEMENTES",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "VII"
+    }
+  ]
+}

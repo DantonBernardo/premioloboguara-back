@@ -1,0 +1,154 @@
+{
+  "avaliadores": [
+    "Angelo Lenart Homem",
+    "Elizandro Ferreira (KAXA)",
+    "Junior Baggio",
+    "Leticia Wolf"
+  ],
+  "projetos": [
+    {
+      "nome": "VIDA NOVA PARA ROUPAS VELHAS",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "LAVANDERIA DE AUTOATENDIMENTO PARA CAMINHONEIROS",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "MICELIAR – COGUMELOS COMESTÍVEIS",
+      "categoria": 4,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "PODCAST ELAS POR INTEIRO",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "II"
+    },
+    {
+      "nome": "SPRINT - INCUBADORA TECNOLÓGICA UTFPR",
+      "categoria": 4,
+      "subcategoria": 3,
+      "grupo": "II"
+    },
+    {
+      "nome": "DESENVOLVIMENTO E AVALIAÇÃO EXPERIMENTAL DE BIOCOMPÓSITOS À BASE DE MICÉLIO PARA APLICAÇÕES NÃO ESTRUTURAIS NA CONSTRUÇÃO CIVIL",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "II"
+    },
+    {
+      "nome": "ANÁLISE CLIMÁTICA E PRODUTIVIDADE AGRÍCOLA NOS MUNICÍPIOS DO PARANÁ: INTEGRAÇÃO DE DADOS CLIMÁTICOS, AGRÍCOLAS E BUSINESS INTELLIGENCE",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "JUNHO",
+      "categoria": 1,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "GENOMAS PARANÁ",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": "GREGADOS PROTEICOS COMO INDUTORES DE AGRUPAMENTO DE RECEPTORES E SINALIZAÇÃO PATOLÓGICA: UM FRAMEWORK LIGANDO O AMILOIDE-Β EXTRACELULAR À DESREGULAÇÃO DA TAU",
+      "categoria": 1,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": "DO DIAGNÓSTICO À AÇÃO: MODELO DE APOIO À TRANSFORMAÇÃO DE MUNICÍPIOS EM CIDADES INTELIGENTES",
+      "categoria": 1,
+      "subcategoria": 3,
+      "grupo": "II"
+    },
+    {
+      "nome": "UMA LAGARTA, MUITAS IDEIAS: CRIATIVIDADE, AUTORIA E APRENDIZAGEM INTERDISCIPLINAR NA EDUCAÇÃO INFANTIL",
+      "categoria": 2,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "DA SALA DE AULA À INOVAÇÃO: APRENDIZAGEM BASEADA EM PROJETOS E PROTAGONISMO ESTUDANTIL NO DESENVOLVIMENTO DO SAFE+",
+      "categoria": 2,
+      "subcategoria": 4,
+      "grupo": "II"
+    },
+    {
+      "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "II"
+    },
+    {
+      "nome": "ESCOLA PROTETORA: PREVENÇÃO DO ABUSO SEXUAL INFANTIL E PROMOÇÃO DA CULTURA DE CUIDADO ATRAVÉS DA TEORIA DO ELO",
+      "categoria": 2,
+      "subcategoria": 5,
+      "grupo": "II"
+    },
+    {
+      "nome": "CEREJEIRAS COMO METÁFORA DA APRENDIZAGEM",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": "O USO DAS TECNOLOGIAS NA PLATAFORMA MATIFIC.",
+      "categoria": 2,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": ": PROGRAMAÇÃO E ROBÓTICA COMO ESTRATÉGIAS PARA O DESENVOLVIMENTO DO PENSAMENTO COMPUTACIONAL, DA CRIATIVIDADE E DO PROTAGONISMO ESTUDANTIL",
+      "categoria": 2,
+      "subcategoria": 3,
+      "grupo": "II"
+    },
+    {
+      "nome": "PALINHA MUSICAL APP",
+      "categoria": 3,
+      "subcategoria": 1,
+      "grupo": "II"
+    },
+    {
+      "nome": "CORRER FAZ BEM",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": "BCG NA MATERNIDADE: VACINAÇÃO OPORTUNA DE RECÉM-NASCIDOS NAS MATERNIDADES DE GUARAPUAVA",
+      "categoria": 3,
+      "subcategoria": 2,
+      "grupo": "II"
+    },
+    {
+      "nome": "NEVALLEY – DISRUPTIVE COMMUNITY",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "II"
+    },
+    {
+      "nome": "FEIRA ITINERANTE DAS ESCOLAS DO NÚCLEO DE GUARAPUAVA (FIEG): INTEGRAÇÃO PEDAGÓGICA, PROTAGONISMO ESTUDANTIL E INOVAÇÃO NO ENSINO.",
+      "categoria": 3,
+      "subcategoria": 4,
+      "grupo": "II"
+    },
+    {
+      "nome": "PROJETO DE RECOMPOSIÇÃO DA APRENDIZAGEM EM LÍNGUA PORTUGUESA (2026)",
+      "categoria": 3,
+      "subcategoria": 3,
+      "grupo": "II"
+    }
+  ]
+}

@@ -74,18 +74,23 @@ class PaginacaoAdminTest extends TestCase
             ->assertJsonMissingPath('projetos')->assertJsonMissingPath('avaliadores');
     }
 
-    public function test_seed_cria_tres_estagios_e_preserva_avaliacoes_editadas(): void
+    public function test_seed_real_inicia_sem_notas_e_preserva_avaliacoes_editadas(): void
     {
         $this->autenticar();
         $this->seed(ProjetoSeeder::class);
-        $this->getJson('/api/admin/dashboard')->assertJsonPath('andamento.aguardando', 67)
-            ->assertJsonPath('andamento.em_processo', 67)->assertJsonPath('andamento.finalizados', 66);
+        $this->getJson('/api/admin/dashboard')->assertJsonPath('andamento.aguardando', 147)
+            ->assertJsonPath('andamento.em_processo', 0)->assertJsonPath('andamento.finalizados', 0);
         $projeto = Projeto::orderBy('id')->skip(2)->firstOrFail();
         $codigo = $projeto->codigo;
-        $projeto->update(['notas' => $this->notas(2)]);
+        $avaliacoes = $this->notas(2);
+        foreach ($avaliacoes as $i => &$nota) {
+            $nota['avaliador_id'] = $projeto->avaliador_ids[$i];
+        }
+        unset($nota);
+        $projeto->update(['notas' => $avaliacoes]);
         $notas = $projeto->notas;
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 200);
+        $this->assertDatabaseCount('projetos', 147);
         $this->assertSame($codigo, $projeto->fresh()->codigo);
         $this->assertSame($notas, $projeto->fresh()->notas);
     }

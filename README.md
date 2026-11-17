@@ -31,11 +31,11 @@ A API estará em `http://localhost:8000`. O `.env.example` utiliza SQLite, sess�
 # Categorias, subcategorias e usuários
 php artisan db:seed
 
-# Massa demonstrativa de 200 projetos; disponível em local/testing
+# 147 projetos reais; os 24 do grupo II aguardam definição
 php artisan db:seed --class=ProjetoSeeder
 ```
 
-A massa de projetos inclui grupos diferentes de três avaliadores, notas de exemplo e projetos em diferentes estágios. O seeder de usuários permite e-mails nulos e preserva senhas já alteradas.
+A seed importa os projetos reais e seus grupos de avaliadores a partir de `database/seeders/projetos-reais.json`, inicialmente sem notas. Os projetos do grupo II ficam separados em `projetos-pendentes-grupo-ii.json`. O seeder de usuários permite e-mails nulos e preserva senhas já alteradas.
 
 Conta administrativa inicial: `scti@guarapuava.pr.gov.br`. A senha inicial dos usuários criados pela seed é `senha123`; altere as credenciais antes de disponibilizar o sistema em produção. Usuários sem e-mail precisam desse dado para acessar pelo login.
 
@@ -97,4 +97,4 @@ Os testes cobrem regras de notas, autorização, chaves, seeds, paginação, ran
 
 O Dockerfile possui target `prod` para PHP-FPM. Configure banco, `APP_KEY`, `APP_URL`, `APP_ENV=production`, `APP_DEBUG=false` e cookies seguros para HTTPS. O nginx do client encaminha a API ao serviço `backend:9000`; ambos precisam estar na mesma rede.
 
-Execute as migrations no ambiente de destino e permita escrita em `storage` e `bootstrap/cache`. `.env`, banco SQLite, logs e `vendor/` não são versionados. Use as seeds demonstrativas somente em desenvolvimento.
+Execute as migrations no ambiente de destino e permita escrita em `storage` e `bootstrap/cache`. `.env`, banco SQLite, logs e `vendor/` não são versionados. A seed de projetos preserva códigos e avaliações existentes ao ser reexecutada.
