@@ -235,6 +235,138 @@
     "D59": [
       "Shana Gonçalves de Oliveira",
       "Silvestre Labiak Junior"
+    ],
+    "D60": [
+      "Aline Malherdi",
+      "Salette Silveira Azevedo"
+    ],
+    "D61": [
+      "Salette Silveira Azevedo",
+      "Renato Maçaneiro"
+    ],
+    "D62": [
+      "Aline Malherdi",
+      "Thaís Cristina da Costa"
+    ],
+    "D63": [
+      "Aline Malherdi",
+      "Paulo Alvim"
+    ],
+    "D64": [
+      "Thaís Cristina da Costa",
+      "Carlos Alberto Facco"
+    ],
+    "D65": [
+      "Andrea Alves Vieira",
+      "Paulo Alvim"
+    ],
+    "D66": [
+      "Andrea Alves Vieira",
+      "Salette Silveira Azevedo"
+    ],
+    "D67": [
+      "Andrea Alves Vieira",
+      "Thaís Cristina da Costa"
+    ],
+    "D68": [
+      "Paulo Alvim",
+      "Daniel Leipnitz"
+    ],
+    "D69": [
+      "Thaís Cristina da Costa",
+      "Daniel Leipnitz"
+    ],
+    "D70": [
+      "Angelo Lenart Homen",
+      "Paulo Alvim"
+    ],
+    "D71": [
+      "Salette Silveira Azevedo",
+      "Daniel Leipnitz"
+    ],
+    "D72": [
+      "Bruna Nadal",
+      "Thaís Cristina da Costa"
+    ],
+    "D73": [
+      "Carlos Alberto Facco",
+      "Paulo Alvim"
+    ],
+    "D74": [
+      "Cesar Antonio Bitencourt",
+      "Salette Silveira Azevedo"
+    ],
+    "D75": [
+      "Salette Silveira Azevedo",
+      "Rafael Luz"
+    ],
+    "D76": [
+      "Cesar Antonio Bitencourt",
+      "Thaís Cristina da Costa"
+    ],
+    "D77": [
+      "Paulo Alvim",
+      "Renato Maçaneiro"
+    ],
+    "D78": [
+      "Thaís Cristina da Costa",
+      "Marina de Souza Bastos"
+    ],
+    "D79": [
+      "Elisangela Rosa",
+      "Paulo Alvim"
+    ],
+    "D80": [
+      "Salette Silveira Azevedo",
+      "Marina de Souza Bastos"
+    ],
+    "D81": [
+      "Salette Silveira Azevedo",
+      "Leonel Rodrigues"
+    ],
+    "D82": [
+      "Fabiola Cristhine Costa",
+      "Thaís Cristina da Costa"
+    ],
+    "D83": [
+      "Fabiola Cristhine Costa",
+      "Paulo Alvim"
+    ],
+    "D84": [
+      "Thaís Cristina da Costa",
+      "Michael Douglas Camilo"
+    ],
+    "D85": [
+      "Gustavo Oliveira Acosta",
+      "Paulo Alvim"
+    ],
+    "D86": [
+      "Leonel Rodrigues",
+      "Thaís Cristina da Costa"
+    ],
+    "D87": [
+      "Paulo Alvim",
+      "Silvestre Labiak Junior"
+    ],
+    "D88": [
+      "Marcos Pelegrina",
+      "Salette Silveira Azevedo"
+    ],
+    "D89": [
+      "Marcos Pelegrina",
+      "Thaís Cristina da Costa"
+    ],
+    "D90": [
+      "Mariana Carvalho",
+      "Salette Silveira Azevedo"
+    ],
+    "D91": [
+      "Patricia Salvação",
+      "Salette Silveira Azevedo"
+    ],
+    "D92": [
+      "Paulo Alvim",
+      "Thiago Marcelino"
     ]
   },
   "projetos": [
@@ -260,7 +392,7 @@
       "nome": "MUITO ALÉM DE BRINCAR: A INOVAÇÃO NAS MÃOS DAS CRIANÇAS",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D3"
+      "grupo": "D60"
     },
     {
       "nome": "RACIOCÍNIO CLÍNICO PARA INICIANTES NA EDUCAÇÃO MÉDICA: DESENVOLVIMENTO DE HABILIDADES E AVALIAÇÃO EM COMPARAÇÃO COM ESPECIALISTAS E INTELIGÊNCIA ARTIFICIAL",
@@ -296,19 +428,19 @@
       "nome": "LITERATURA EM MOVIMENTO: RELEITURAS CRIATIVAS DAS OBRAS DOS VESTIBULARES POR MEIO DE HQS, FANZINES E FOLHETINS",
       "categoria": 2,
       "subcategoria": 4,
-      "grupo": "D7"
+      "grupo": "D61"
     },
     {
       "nome": "PROJETO PASTORAL DA EDUCAÇÃO - INOVAÇÃO SOCIAL E APOIO PEDAGÓGICO NA PARÓQUIA NOSSA SENHORA DO PERPÉTUO SOCORRO",
       "categoria": 2,
       "subcategoria": 3,
-      "grupo": "D7"
+      "grupo": "D62"
     },
     {
       "nome": "QUANDO O PROFESSOR VIRA ALUNO: PENSAMENTO COMPUTACIONAL, COMUNICAÇÃO E APRENDIZAGEM PELA EXPERIÊNCIA NA FORMAÇÃO DOCENTE",
       "categoria": 2,
       "subcategoria": 6,
-      "grupo": "D7"
+      "grupo": "D63"
     },
     {
       "nome": "DEMOCRATIZAÇÃO DA TECNOLOGIA SEM CÓDIGO: UMA EXPERIÊNCIA PEDAGÓGICA NA FORMAÇÃO DE PROFISSIONAIS DA SAÚDE",
@@ -320,13 +452,13 @@
       "nome": "DESTILARIA DE ÁLCOOL A PARTIR DA BATATA REFUGO",
       "categoria": 3,
       "subcategoria": 1,
-      "grupo": "D8"
+      "grupo": "D64"
     },
     {
       "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
       "categoria": 3,
       "subcategoria": 2,
-      "grupo": "D8"
+      "grupo": "D65"
     },
     {
       "nome": "GRUPO DE IDOSOS LOBOS ETERNOS 55+",
@@ -350,7 +482,7 @@
       "nome": "MERCADO DE ECONOMIA SOLIDÁRIA PRODUTOS DA TERRA",
       "categoria": 3,
       "subcategoria": 1,
-      "grupo": "D9"
+      "grupo": "D66"
     },
     {
       "nome": "PLANEJA GUARAPUAVA",
@@ -362,7 +494,7 @@
       "nome": "PLANTON - ESCALAS DE PLANTÃO",
       "categoria": 3,
       "subcategoria": 3,
-      "grupo": "D11"
+      "grupo": "D67"
     },
     {
       "nome": "SONAVER",
@@ -392,19 +524,19 @@
       "nome": "PSICO – SIMULADOR DE ATENDIMENTO PSICOLÓGICO COM INTELIGÊNCIA ARTIFICIAL LOCAL PARA A FORMAÇÃO EM PSICOLOGIA",
       "categoria": 3,
       "subcategoria": 1,
-      "grupo": "D14"
+      "grupo": "D68"
     },
     {
       "nome": "BCG NA MATERNIDADE: VACINAÇÃO OPORTUNA DE RECÉM-NASCIDOS NAS MATERNIDADES DE GUARAPUAVA",
       "categoria": 3,
       "subcategoria": 2,
-      "grupo": "D14"
+      "grupo": "D69"
     },
     {
       "nome": "EDUCAÇÃO E PREVENÇÃO DA VIOLÊNCIA NO AMBIENTE ESCOLAR: UMA PARCERIA ENTRE ESCOLA O O NÚCLEO MARIA DA PENHA DE GUARAPUAVA-PR",
       "categoria": 3,
       "subcategoria": 2,
-      "grupo": "D15"
+      "grupo": "D70"
     },
     {
       "nome": "GERAÇÃO INOVADORA: ESCOLAS CONECTADAS AO ECOSSISTEMA DE INOVAÇÃO DE GUARAPUAVA",
@@ -470,13 +602,13 @@
       "nome": "ORNADA EDUCATECH: FOMENTO À CULTURA DE CIÊNCIA, TECNOLOGIA, EMPREENDEDORISMO E INOVAÇÃO NA EDUCAÇÃO DE GUARAPUAVA E REGIÃO",
       "categoria": 3,
       "subcategoria": 4,
-      "grupo": "D19"
+      "grupo": "D71"
     },
     {
       "nome": "AVALIAÇÃO PRÉ-CLÍNICA DE UMA VACINA TERAPÊUTICA MULTIVALENTE BASEADA EM RNA MENSAGEIRO (MRNA), DIRECIONADA A ANTÍGENOS ASSOCIADOS A TUMORES SUPEREXPRESSOS EM TUMORES / IPEC",
       "categoria": 3,
       "subcategoria": 1,
-      "grupo": "D20"
+      "grupo": "D72"
     },
     {
       "nome": "UM ESPAÇO DE SENTIDOS, ACOLHIMENTO E INCLUSÃO",
@@ -536,7 +668,7 @@
       "nome": "DESENVOLVIMENTO E AVALIAÇÃO DE NANOFORMULAÇÕES CONTENDO PROPARGILAMINAS PARA A CICATRIZAÇÃO DE FERIDAS HUMANAS E ANIMAIS: INOVAÇÃO SUSTENTÁVEL EM SAÚDE ÚNICA",
       "categoria": 3,
       "subcategoria": 1,
-      "grupo": "D23"
+      "grupo": "D73"
     },
     {
       "nome": "VIVEIRO DA CIDADE DOS LAGOS: INOVAÇÃO NA GESTÃO AMBIENTAL E SUSTENTABILIDADE URBANA",
@@ -602,19 +734,19 @@
       "nome": "A LINHA DO TEMPO DAS NOSSAS CONEXÕES: DO RÁDIO AO ROBÔ NA GUARAPUAVA DO FUTURO.",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D29"
+      "grupo": "D74"
     },
     {
       "nome": "EXPLORANDO OS SEGREDOS DA NATUREZA",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D29"
+      "grupo": "D75"
     },
     {
       "nome": "DA SALA DE AULA À INOVAÇÃO: APRENDIZAGEM BASEADA EM PROJETOS E PROTAGONISMO ESTUDANTIL NO DESENVOLVIMENTO DO SAFE+",
       "categoria": 2,
       "subcategoria": 4,
-      "grupo": "D29"
+      "grupo": "D76"
     },
     {
       "nome": "SESI AMIGO & SESI AMIGA: DA CIÊNCIA À AÇÃO  PROTAGONISMO JUVENIL, EDUCAÇÃO MAKER E TRANSFORMAÇÃO SOCIAL PELA MEDIAÇÃO DOCENTE",
@@ -644,7 +776,7 @@
       "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
       "categoria": 2,
       "subcategoria": 5,
-      "grupo": "D30"
+      "grupo": "D77"
     },
     {
       "nome": "ABRASEL NOS BAIRROS",
@@ -722,19 +854,19 @@
       "nome": "REDÁRIO LITERÁRIO: LEITURA, IMAGINAÇÃO, ACOLHIMENTO, NATUREZA E VÍNCULOS NA EDUCAÇÃO INFANTIL",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D36"
+      "grupo": "D78"
     },
     {
       "nome": "ECO SACOLA   (PROJETO DESENVOLVIDO EM 2023)",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D36"
+      "grupo": "D79"
     },
     {
       "nome": "UMA LAGARTA, MUITAS IDEIAS: CRIATIVIDADE, AUTORIA E APRENDIZAGEM INTERDISCIPLINAR NA EDUCAÇÃO INFANTIL",
       "categoria": 2,
       "subcategoria": 1,
-      "grupo": "D36"
+      "grupo": "D80"
     },
     {
       "nome": "QUÍMICA POR TRÁS DOS RÓTULOS",
@@ -836,13 +968,13 @@
       "nome": "TECENDO ELAS",
       "categoria": 4,
       "subcategoria": 1,
-      "grupo": "D40"
+      "grupo": "D81"
     },
     {
       "nome": "FLORESTA HEARTLAND — MODELO INTEGRADO DE CUIDADO E TURISMO RESTAURATIVO SAÚDE, BEM-ESTAR, NATUREZA E INOVAÇÃO SOCIAL.",
       "categoria": 4,
       "subcategoria": 1,
-      "grupo": "D40"
+      "grupo": "D82"
     },
     {
       "nome": "LAVANDERIA DE AUTOATENDIMENTO PARA CAMINHONEIROS",
@@ -872,7 +1004,7 @@
       "nome": "PROJETO TECNOLOGIA QUE TRANSFORMA - EMPREENDEDORISMO 3D/C.ARTE3D",
       "categoria": 4,
       "subcategoria": 1,
-      "grupo": "D41"
+      "grupo": "D83"
     },
     {
       "nome": "REVISTA VISUAL",
@@ -920,13 +1052,13 @@
       "nome": "PLANALTO ATIVO – UBS PLANALTO",
       "categoria": 3,
       "subcategoria": 2,
-      "grupo": "D43"
+      "grupo": "D84"
     },
     {
       "nome": "PREFEITURA MUNICIPAL DE GUARAPUAVA",
       "categoria": 3,
       "subcategoria": 4,
-      "grupo": "D43"
+      "grupo": "D85"
     },
     {
       "nome": "AGRATEC LTDA - SISTEMA INTELIGENTE DE ANÁLISE DE SEMENTES",
@@ -968,7 +1100,7 @@
       "nome": "PANIFICADORA DE ECONOMIA SOLIDÁRIA CRESCER",
       "categoria": 4,
       "subcategoria": 1,
-      "grupo": "D47"
+      "grupo": "D86"
     },
     {
       "nome": "LOW PETIT CHOCOLATES SAUDÁVEIS BEAN-TO-BAR",
@@ -1034,13 +1166,13 @@
       "nome": "MAPEAMENTO DE ÁREAS DE SUSCETIBILIDADE A MOVIMENTOS DE MASSA NO MUNICÍPIO DE GUARAPUAVA-PR",
       "categoria": 1,
       "subcategoria": 3,
-      "grupo": "D52"
+      "grupo": "D87"
     },
     {
       "nome": "ESTRATÉGIAS INTERDISCIPLINARES DE EDUCAÇÃO EM SAÚDE PARA A PREVENÇÃO DA OBESIDADE NA INFÂNCIA",
       "categoria": 1,
       "subcategoria": 1,
-      "grupo": "D52"
+      "grupo": "D88"
     },
     {
       "nome": "JUNHO",
@@ -1070,7 +1202,7 @@
       "nome": "DESENVOLVIMENTO E AVALIAÇÃO EXPERIMENTAL DE BIOCOMPÓSITOS À BASE DE MICÉLIO PARA APLICAÇÕES NÃO ESTRUTURAIS NA CONSTRUÇÃO CIVIL",
       "categoria": 1,
       "subcategoria": 3,
-      "grupo": "D53"
+      "grupo": "D89"
     },
     {
       "nome": "SISTEMA BIOMINERALIZADOR DE PURIFICAÇÃO DE EFLUENTES  INDUSTRIAIS",
@@ -1100,7 +1232,7 @@
       "nome": "VIDA NOVA PARA ROUPAS VELHAS",
       "categoria": 4,
       "subcategoria": 1,
-      "grupo": "D54"
+      "grupo": "D90"
     },
     {
       "nome": "REDE DE NEGÓCIOS GUARAPUAVA",
@@ -1166,7 +1298,7 @@
       "nome": "TECNOLOGIA E INTENSIFICAÇÃO DO TRABALHO:  A INFLUÊNCIA DO WHATSAPP NA ROTINA DOS PROFESSORES EM  CARGOS DE CHEFIA NA UNICENTRO",
       "categoria": 1,
       "subcategoria": 1,
-      "grupo": "D57"
+      "grupo": "D91"
     },
     {
       "nome": "EXPLORANDO A ENTOMOLOGIA A PARTIR DO MODELO INSTRUCIONAL 5E: PROPOSTA DE ENSINO DE CIÊNCIAS POR INVESTIGAÇÃO NOS ANOS INICIAIS",
@@ -1202,7 +1334,7 @@
       "nome": "CIDADE EM JOGO: DESENVOLVIMENTO DE UM JOGO DIGITAL COOPERATIVO PARA A EDUCAÇÃO URBANA E CIDADÃ DE CRIANÇAS EM GUARAPUAVA (PR)",
       "categoria": 1,
       "subcategoria": 3,
-      "grupo": "D58"
+      "grupo": "D92"
     },
     {
       "nome": "MODELAGEM E OTIMIZAÇÃO DAS PROPRIEDADES DE MATERIAIS CIMENTÍCIOS CONTENDO RESÍDUOS INDUSTRIAIS",
@@ -1264,5 +1396,37 @@
       "subcategoria": 3,
       "grupo": "D59"
     }
-  ]
+  ],
+  "areas_avaliadores": {
+    "Andrea Alves Vieira": 3,
+    "Renato Maçaneiro": 2,
+    "Carlos Alberto Facco": 3,
+    "Gustavo Comeli": 3,
+    "Aline Malherdi": 2,
+    "Eduardo Akira Azuma": 3,
+    "Henrique Domakoski": 4,
+    "Rosiclei Caldato Dalagnol": 4,
+    "Rafael Luz": 2,
+    "Cesar Antonio Bitencourt": 2,
+    "Thiago Marcelino": 1,
+    "Marcos Pelegrina": 1,
+    "Bruna Nadal": 3,
+    "Silvestre Labiak Junior": 1,
+    "Shana Gonçalves de Oliveira": 1,
+    "Mariana Carvalho": 4,
+    "Junior Baggio": 3,
+    "Angelo Lenart Homen": 3,
+    "Patricia Salvação": 1,
+    "Daniel Leipnitz": 3,
+    "Marina de Souza Bastos": 2,
+    "Elizandro Ferreira (KAXA)": 3,
+    "Fabiola Cristhine Costa": 4,
+    "Michael Douglas Camilo": 3,
+    "Leonel Rodrigues": 4,
+    "Elisangela Rosa": 2,
+    "Thaís Cristina da Costa": 3,
+    "Gustavo Oliveira Acosta": 3,
+    "Paulo Alvim": 3,
+    "Salette Silveira Azevedo": null
+  }
 }

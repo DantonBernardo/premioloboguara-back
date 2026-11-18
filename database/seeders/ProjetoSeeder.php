@@ -20,6 +20,9 @@ class ProjetoSeeder extends Seeder
         $usuarios = User::where('perfil', User::PERFIL_AVALIADOR)->get()->keyBy(fn (User $usuario): string => $normalizar($usuario->name));
         $grupos = [];
         foreach ($fonte['grupos'] as $grupo => $nomes) {
+            if (count($nomes) !== 2) {
+                throw new RuntimeException('O grupo '.$grupo.' deve conter uma dupla de avaliadores.');
+            }
             if (count($nomes) > config('avaliacao.limite_avaliacoes')) {
                 throw new RuntimeException('O grupo '.$grupo.' possui mais avaliadores que o limite de notas. Defina a composição antes de importar.');
             }
@@ -32,13 +35,28 @@ class ProjetoSeeder extends Seeder
                 }
                 $grupos[$grupo][] = $usuario->id;
             }
+            if (count(array_unique($grupos[$grupo])) !== 2) {
+                throw new RuntimeException('O grupo '.$grupo.' deve conter dois avaliadores diferentes.');
+            }
         }
-        $preparados = collect($fonte['projetos'])->map(function (array $linha) use ($grupos): array {
+        $preparados = collect($fonte['projetos'])->map(function (array $linha) use ($grupos, $fonte): array {
             $subcategoria = Subcategoria::whereHas('categoria', fn ($query) => $query->where('codigo', $linha['categoria']))
                 ->where('codigo', $linha['subcategoria'])->sole();
 
+            $especialista = collect($fonte['grupos'][$linha['grupo']])->contains(
+                fn (string $nome): bool => ($fonte['areas_avaliadores'][$nome] ?? null) === $linha['categoria'],
+            );
+            if (! $especialista) {
+                throw new RuntimeException('O projeto '.$linha['nome'].' precisa de pelo menos um avaliador da área da categoria.');
+            }
+
             return ['nome' => $linha['nome'], 'subcategoria_id' => $subcategoria->id, 'avaliador_ids' => $grupos[$linha['grupo']]];
         });
+        $designados = $preparados->pluck('avaliador_ids')->flatten()->unique()->all();
+        $semProjetos = $usuarios->filter(fn (User $usuario): bool => $usuario->ativo && ! in_array($usuario->id, $designados, true));
+        if ($semProjetos->isNotEmpty()) {
+            throw new RuntimeException('A distribuição deixou avaliadores ativos sem projetos: '.$semProjetos->pluck('name')->implode(', '));
+        }
         DB::transaction(function () use ($preparados): void {
             foreach ($preparados as $dados) {
                 $projeto = Projeto::firstOrNew(['nome' => $dados['nome'], 'subcategoria_id' => $dados['subcategoria_id']]);

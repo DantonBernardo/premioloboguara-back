@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Projeto;
+use App\Models\Subcategoria;
 use App\Models\User;
 use Database\Seeders\ProjetoSeeder;
 use Database\Seeders\UsersSeeder;
@@ -56,5 +57,56 @@ class DistribuicaoProjetosSeederTest extends TestCase
         $this->seed(ProjetoSeeder::class);
         $this->assertDatabaseCount('projetos', 171);
         $this->assertSame($estado, Projeto::orderBy('id')->get(['id', 'codigo', 'notas', 'avaliador_ids'])->toArray());
+    }
+
+    public function test_todos_os_aceitos_participam_com_carga_equilibrada_e_especialista_em_cada_dupla(): void
+    {
+        $this->seed(ProjetoSeeder::class);
+        $fonte = json_decode(file_get_contents(database_path('seeders/projetos-reais.json')), true, flags: JSON_THROW_ON_ERROR);
+        $usuarios = User::where('perfil', User::PERFIL_AVALIADOR)->where('ativo', true)->get();
+        $projetos = Projeto::with('subcategoria.categoria')->get();
+        $cargas = $projetos->pluck('avaliador_ids')->flatten()->countBy();
+        $this->assertCount(30, $usuarios);
+        $this->assertCount(30, $cargas);
+        $this->assertSame(342, $cargas->sum());
+        $this->assertSame(11, $cargas->min());
+        $this->assertSame(12, $cargas->max());
+        foreach ($usuarios as $usuario) {
+            $this->assertGreaterThanOrEqual(11, $cargas[$usuario->id]);
+        }
+        foreach (['Thaís Cristina da Costa', 'Salette Silveira Azevedo', 'Paulo Alvim'] as $nome) {
+            $this->assertSame(11, $cargas[$usuarios->firstWhere('name', $nome)->id]);
+        }
+        foreach ($projetos as $projeto) {
+            $this->assertCount(2, array_unique($projeto->avaliador_ids));
+            $especialista = $usuarios->whereIn('id', $projeto->avaliador_ids)->contains(
+                fn (User $usuario): bool => ($fonte['areas_avaliadores'][$usuario->name] ?? null) === $projeto->subcategoria->categoria->codigo,
+            );
+            $this->assertTrue($especialista, $projeto->nome);
+        }
+    }
+
+    public function test_redistribuicao_nao_remove_avaliador_com_nota_publicada(): void
+    {
+        $this->seed(UsersSeeder::class);
+        $usuario = User::where('name', 'Gustavo Comeli')->sole();
+        $andrea = User::where('name', 'Andrea Alves Vieira')->sole();
+        $fonte = json_decode(file_get_contents(database_path('seeders/projetos-reais.json')), true, flags: JSON_THROW_ON_ERROR);
+        $linha = collect($fonte['projetos'])->firstWhere('nome', 'PLANTON - ESCALAS DE PLANTÃO');
+        $subcategoria = Subcategoria::where('codigo', $linha['subcategoria'])->whereHas('categoria', fn ($query) => $query->where('codigo', $linha['categoria']))->sole();
+        $projeto = Projeto::factory()->create([
+            'nome' => $linha['nome'], 'subcategoria_id' => $subcategoria->id,
+            'avaliador_ids' => [$andrea->id, $usuario->id],
+            'notas' => [['avaliador_id' => $usuario->id, 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2]],
+        ]);
+        $estado = $projeto->fresh()->getAttributes();
+        try {
+            $this->seed(ProjetoSeeder::class);
+            $this->fail('Não deve remover um avaliador com nota registrada.');
+        } catch (\RuntimeException $exception) {
+            $this->assertStringContainsString('avaliador com nota registrada', $exception->getMessage());
+        }
+        $this->assertSame($estado, $projeto->fresh()->getAttributes());
+        $this->assertDatabaseCount('projetos', 1);
     }
 }
