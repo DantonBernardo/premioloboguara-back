@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ConfiguracaoController;
+use App\Http\Controllers\RascunhoAvaliacaoController;
 use App\Http\Controllers\TermosAvaliadorController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::prefix('api')->group(function () {
                 ->where(['chave' => '[0-9]{8}', 'categoria' => '[1-9][0-9]*', 'subcategoria' => '[1-9][0-9]*']);
             Route::get('/projetos/{projeto}', [AvaliacaoController::class, 'show']);
             Route::put('/projetos/{projeto}/avaliacao', [AvaliacaoController::class, 'update']);
+            Route::put('/projetos/{projeto}/rascunho', [RascunhoAvaliacaoController::class, 'update']);
         });
     });
 

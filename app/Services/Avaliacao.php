@@ -98,6 +98,7 @@ class Avaliacao
 
             $atual->notas = $notas;
             $atual->save();
+            DB::table('avaliacao_rascunhos')->where('projeto_id', $atual->id)->where('avaliador_id', $avaliador->id)->delete();
 
             return $atual;
         }, 3);

@@ -31,7 +31,10 @@ class AvaliacaoController extends Controller
             : "EXISTS (SELECT 1 FROM json_each(projetos.notas) n WHERE CAST(json_extract(n.value, '$.avaliador_id') AS INTEGER) = ?)";
         $total = (clone $base)->count();
         $avaliados = (clone $base)->whereRaw($temNota, [$id])->count();
-        $consulta = $base->with('subcategoria.categoria');
+        $consulta = $base->with('subcategoria.categoria')->select('projetos.*')->addSelect([
+            'rascunho_em' => DB::table('avaliacao_rascunhos')->select('updated_at')
+                ->whereColumn('projeto_id', 'projetos.id')->where('avaliador_id', $id)->limit(1),
+        ]);
         if (! empty($filtros['status'])) {
             $consulta->whereRaw(($filtros['status'] === 'pendentes' ? 'NOT ' : '').$temNota, [$id]);
         }
@@ -56,6 +59,7 @@ class AvaliacaoController extends Controller
                 'subcategoria' => $projeto->subcategoria->nome,
                 'avaliada' => $nota !== null, 'minha_nota' => $nota['total'] ?? null,
                 'minha_habilitacao' => $nota['habilitada'] ?? null,
+                'rascunho_em' => $projeto->rascunho_em,
             ];
         });
 
@@ -76,6 +80,7 @@ class AvaliacaoController extends Controller
     public function show(Request $request, Projeto $projeto, Avaliacao $avaliacao): JsonResponse
     {
         abort_unless(in_array($request->user()->id, array_map('intval', $projeto->avaliador_ids ?? []), true), 403);
+        $rascunho = DB::table('avaliacao_rascunhos')->where('projeto_id', $projeto->id)->where('avaliador_id', $request->user()->id)->first();
 
         return response()->json([
             'projeto' => $projeto->only(['id', 'codigo', 'nome', 'subcategoria_id']) + [
@@ -86,6 +91,7 @@ class AvaliacaoController extends Controller
             'nota_maxima' => config('avaliacao.nota_maxima'),
             'nota_corte' => config('avaliacao.nota_corte'),
             'avaliacao' => collect($projeto->notas ?? [])->firstWhere('avaliador_id', $request->user()->id),
+            'rascunho' => $rascunho ? json_decode($rascunho->dados, true, 512, JSON_THROW_ON_ERROR) + ['salvo_em' => $rascunho->updated_at] : null,
         ]);
     }
 

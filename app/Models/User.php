@@ -20,7 +20,9 @@ class User extends Authenticatable
 
     public const PERFIL_AVALIADOR = 'avaliador';
 
-    public const PERFIS = [self::PERFIL_ADMIN, self::PERFIL_AVALIADOR];
+    public const PERFIL_DEMO = 'demo';
+
+    public const PERFIS = [self::PERFIL_ADMIN, self::PERFIL_AVALIADOR, self::PERFIL_DEMO];
 
     /** Regra única de senha do sistema: mínimo de 8 caracteres, sem exigência de símbolos. */
     public const SENHA_MINIMA = 8;
