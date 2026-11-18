@@ -31,17 +31,17 @@ A API estará em `http://localhost:8000`. O `.env.example` utiliza SQLite, sess�
 # Categorias, subcategorias e usuários
 php artisan db:seed
 
-# 147 projetos reais; os 24 do grupo II aguardam definição
+# 171 projetos reais distribuídos em duplas
 php artisan db:seed --class=ProjetoSeeder
 ```
 
-A seed importa os projetos reais e seus grupos de avaliadores a partir de `database/seeders/projetos-reais.json`, inicialmente sem notas. Os projetos do grupo II ficam separados em `projetos-pendentes-grupo-ii.json`. O seeder de usuários permite e-mails nulos e preserva senhas já alteradas.
+A seed importa os projetos reais e seus grupos de avaliadores a partir de `database/seeders/projetos-reais.json`, inicialmente sem notas. A distribuição atual inclui todos os grupos e substitui Leticia Wolf por Henrique Domakoski. O seeder de usuários permite e-mails nulos e preserva senhas já alteradas.
 
 Conta administrativa inicial: `scti@guarapuava.pr.gov.br`. A senha inicial dos usuários criados pela seed é `senha123`; altere as credenciais antes de disponibilizar o sistema em produção. Usuários sem e-mail precisam desse dado para acessar pelo login.
 
 ## Regras de avaliação
 
-- Cada projeto recebe até três avaliações de avaliadores distintos associados ao projeto.
+- Cada projeto recebe até duas avaliações de avaliadores distintos associados ao projeto.
 - O backend valida os critérios e calcula cada nota, limitada a 10 pontos.
 - A média do projeto considera somente as avaliações recebidas: soma das notas dividida pela quantidade de avaliações.
 - Critérios e limites estão em `config/avaliacao.php`; categorias e subcategorias em `config/categorias.php`.
@@ -66,7 +66,7 @@ Autenticação por sessão e cookie com proteção CSRF. As rotas ficam em `rout
 | `GET /api/admin/ranking` | Ranking e destaques por categoria |
 | `GET /api/admin/relatorios` | Indicadores e classificação com filtros |
 | `GET /api/admin/relatorios/pdf` | PDF geral |
-| `GET /api/admin/relatorios/pdf?tipo=resultados` | Lista exclusiva dos resultados com três notas |
+| `GET /api/admin/relatorios/pdf?tipo=resultados` | Lista exclusiva dos resultados com duas notas |
 | `GET /api/avaliador/projetos` | Projetos associados ao avaliador autenticado |
 | `GET /api/avaliador/projetos/{id}` | Ficha e critérios da categoria |
 | `PUT /api/avaliador/projetos/{id}/avaliacao` | Registrar ou revisar avaliação |
@@ -98,3 +98,5 @@ Os testes cobrem regras de notas, autorização, chaves, seeds, paginação, ran
 O Dockerfile possui target `prod` para PHP-FPM. Configure banco, `APP_KEY`, `APP_URL`, `APP_ENV=production`, `APP_DEBUG=false` e cookies seguros para HTTPS. O nginx do client encaminha a API ao serviço `backend:9000`; ambos precisam estar na mesma rede.
 
 Execute as migrations no ambiente de destino e permita escrita em `storage` e `bootstrap/cache`. `.env`, banco SQLite, logs e `vendor/` não são versionados. A seed de projetos preserva códigos e avaliações existentes ao ser reexecutada.
+
+A migration do limite de duas avaliações mantém as duas primeiras notas existentes e recalcula a média; faça backup antes de aplicar em bancos com avaliações. A seed atualiza as duplas sem apagar notas registradas.

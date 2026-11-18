@@ -55,18 +55,19 @@ table { width: 100%; border-collapse: collapse; table-layout: fixed; } td { vert
 <div style="page-break-before:always;"></div>
 <header><strong>Prêmio Lobo-guará</strong><span style="float:right; margin-top:5px;">GUARAPUAVA · SECTI · 2026</span></header>
 <p class="eyebrow">Acompanhamento</p><h1>Projetos e avaliações.</h1><p class="small muted">✓ Avaliação recebida &nbsp; · &nbsp; ○ Pendente &nbsp; · &nbsp; — Não designado</p>
-<table class="projects"><thead><tr><th style="width:31%;">Projeto</th><th style="width:16%;">Avaliador 1</th><th style="width:16%;">Avaliador 2</th><th style="width:16%;">Avaliador 3</th><th style="width:7%;">Média</th><th style="width:14%;">Situação</th></tr></thead><tbody>
+<table class="projects"><thead><tr><th style="width:39%;">Projeto</th><th style="width:20%;">Avaliador 1</th><th style="width:20%;">Avaliador 2</th><th style="width:7%;">Média</th><th style="width:14%;">Situação</th></tr></thead><tbody>
 @forelse($lote as $p)
 <tr class="{{ $loop->even ? 'alt' : '' }}"><td><div class="name">{{ $p['nome'] }}</div><div class="code">{{ $p['codigo'] }}</div><div class="small" style="color:{{ $coresCategoria[$p['categoria_codigo']] ?? '#579bd3' }}; margin-top:4px;">{{ $p['categoria'] }}</div></td>
-@for($i = 0; $i < 3; $i++)
-<td>@php $slots = $i === 2 ? array_slice($p['avaliadores'], 2) : array_slice($p['avaliadores'], $i, 1); @endphp
+@for($i = 0; $i < 2; $i++)
+<td>@php $slots = array_slice($p['avaliadores'], $i, 1); @endphp
 @forelse($slots as $a)<div style="margin-bottom:5px;">{{ $a['nome'] }}<div class="status {{ $a['concluida'] ? 'done' : 'pending' }}">{{ $a['concluida'] ? '✓ Recebida' : '○ Pendente' }}</div></div>@empty<span class="unassigned">—<br>Não designado</span>@endforelse</td>
 @endfor
 <td><strong>{{ $nota($p['nota_final']) }}</strong></td>
 @php
     $situacao = match (true) {
+        $p['status'] === 'inabilitada' => 'inabilitada',
         $p['avaliacoes_recebidas'] === 0 => 'sem_avaliacao',
-        $p['avaliacoes_recebidas'] < 3 => 'em_avaliacao',
+        $p['avaliacoes_recebidas'] < 2 => 'em_avaliacao',
         default => $p['status'],
     };
 @endphp

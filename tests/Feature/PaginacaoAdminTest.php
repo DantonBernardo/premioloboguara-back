@@ -65,12 +65,12 @@ class PaginacaoAdminTest extends TestCase
     public function test_panorama_conta_as_notas_e_nao_a_media_ou_designacao(): void
     {
         $this->autenticar();
-        foreach ([0, 1, 2, 3] as $quantidade) {
+        foreach ([0, 1, 2] as $quantidade) {
             Projeto::factory()->create(['notas' => $this->notas($quantidade)]);
         }
         $this->getJson('/api/admin/dashboard')->assertOk()
-            ->assertJsonPath('andamento.aguardando', 1)->assertJsonPath('andamento.em_processo', 2)
-            ->assertJsonPath('andamento.finalizados', 1)->assertJsonPath('resumo.projetos', 4)
+            ->assertJsonPath('andamento.aguardando', 1)->assertJsonPath('andamento.em_processo', 1)
+            ->assertJsonPath('andamento.finalizados', 1)->assertJsonPath('resumo.projetos', 3)
             ->assertJsonMissingPath('projetos')->assertJsonMissingPath('avaliadores');
     }
 
@@ -78,7 +78,7 @@ class PaginacaoAdminTest extends TestCase
     {
         $this->autenticar();
         $this->seed(ProjetoSeeder::class);
-        $this->getJson('/api/admin/dashboard')->assertJsonPath('andamento.aguardando', 147)
+        $this->getJson('/api/admin/dashboard')->assertJsonPath('andamento.aguardando', 171)
             ->assertJsonPath('andamento.em_processo', 0)->assertJsonPath('andamento.finalizados', 0);
         $projeto = Projeto::orderBy('id')->skip(2)->firstOrFail();
         $codigo = $projeto->codigo;
@@ -90,7 +90,7 @@ class PaginacaoAdminTest extends TestCase
         $projeto->update(['notas' => $avaliacoes]);
         $notas = $projeto->notas;
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 147);
+        $this->assertDatabaseCount('projetos', 171);
         $this->assertSame($codigo, $projeto->fresh()->codigo);
         $this->assertSame($notas, $projeto->fresh()->notas);
     }
@@ -99,7 +99,7 @@ class PaginacaoAdminTest extends TestCase
     {
         $this->autenticar();
         Projeto::factory()->count(25)->create();
-        $alvo = Projeto::factory()->create(['nome' => 'Radar premiado', 'notas' => $this->notas(3)]);
+        $alvo = Projeto::factory()->create(['nome' => 'Radar premiado', 'notas' => $this->notas(2)]);
         $this->getJson('/api/admin/relatorios')->assertOk()->assertJsonCount(10, 'projetos.data')
             ->assertJsonPath('projetos.total', 26)->assertJsonPath('projetos.data.0.id', $alvo->id)
             ->assertJsonPath('projetos.data.0.posicao', 1)->assertJsonMissingPath('ranking');
@@ -113,12 +113,12 @@ class PaginacaoAdminTest extends TestCase
     public function test_andamento_filtra_classificacao_sem_alterar_totais(): void
     {
         $this->autenticar();
-        foreach ([0, 1, 2, 3] as $quantidade) {
+        foreach ([0, 1, 2] as $quantidade) {
             Projeto::factory()->create(['notas' => $this->notas($quantidade)]);
         }
-        foreach (['aguardando' => 1, 'em_processo' => 2, 'finalizados' => 1] as $andamento => $total) {
+        foreach (['aguardando' => 1, 'em_processo' => 1, 'finalizados' => 1] as $andamento => $total) {
             $this->getJson('/api/admin/relatorios?andamento='.$andamento)->assertOk()
-                ->assertJsonPath('projetos.total', $total)->assertJsonPath('totais.projetos', 4);
+                ->assertJsonPath('projetos.total', $total)->assertJsonPath('totais.projetos', 3);
         }
         $this->getJson('/api/admin/relatorios?andamento=incorreto')->assertUnprocessable();
         $this->getJson('/api/admin/relatorios?andamento=finalizados&busca=inexistente')->assertJsonPath('projetos.total', 0);
@@ -131,9 +131,9 @@ class PaginacaoAdminTest extends TestCase
             $sub = Categoria::where('codigo', $codigo)->sole()->subcategorias()->firstOrFail();
             Projeto::factory()->create([
                 'nome' => 'Projeto da categoria '.$codigo, 'subcategoria_id' => $sub->id,
-                'avaliador_ids' => [1, 2, 3],
+                'avaliador_ids' => [1, 2],
                 'notas' => $this->notas(match ($codigo) {
-                    2 => 1, 3 => 3, default => 0
+                    2 => 1, 3 => 2, default => 0
                 }),
             ]);
         }

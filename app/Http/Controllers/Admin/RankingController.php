@@ -33,8 +33,9 @@ class RankingController extends Controller
         })->values();
         $ordenados = $ordenados->map(function (array $projeto, int $indice): array {
             $situacao = match (true) {
+                $projeto['status'] === 'inabilitada' => 'inabilitada',
                 $projeto['avaliacoes_recebidas'] === 0 => 'sem_avaliacao',
-                $projeto['avaliacoes_recebidas'] < 3 => 'em_avaliacao',
+                $projeto['avaliacoes_recebidas'] < 2 => 'em_avaliacao',
                 default => $projeto['status'],
             };
 
@@ -45,14 +46,14 @@ class RankingController extends Controller
         });
         $resumo = [
             'total' => $ordenados->count(), 'com_nota' => $ordenados->whereNotNull('nota_final')->count(),
-            'finalizados' => $ordenados->where('avaliacoes_recebidas', 3)->count(),
+            'finalizados' => $ordenados->where('avaliacoes_recebidas', 2)->count(),
             'maior_media' => $ordenados->first()['nota_final'] ?? null,
         ];
         if (! empty($filtros['andamento'])) {
             $ordenados = $ordenados->filter(fn (array $p): bool => match ($filtros['andamento']) {
                 'aguardando' => $p['avaliacoes_recebidas'] === 0,
-                'em_processo' => in_array($p['avaliacoes_recebidas'], [1, 2], true),
-                'finalizados' => $p['avaliacoes_recebidas'] === 3,
+                'em_processo' => $p['avaliacoes_recebidas'] === 1,
+                'finalizados' => $p['avaliacoes_recebidas'] === 2,
             });
         }
         if (! empty($filtros['busca'])) {

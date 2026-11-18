@@ -14,7 +14,7 @@ class AreaAvaliadorTest extends TestCase
 
     private function avaliador(): User
     {
-        return User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        return User::factory()->comTermosAceitos()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
     }
 
     private function nota(int $id): array
@@ -56,7 +56,7 @@ class AreaAvaliadorTest extends TestCase
         }
     }
 
-    public function test_envio_e_edicao_substituem_so_a_propria_nota_e_detalhes_nao_expoem_as_outras(): void
+    public function test_envio_publica_a_propria_nota_e_reenvio_nao_altera_avaliacoes_nem_media(): void
     {
         $usuario = $this->avaliador();
         $outro = $this->avaliador();
@@ -65,11 +65,14 @@ class AreaAvaliadorTest extends TestCase
         $dados = $this->nota($usuario->id);
         unset($dados['avaliador_id']);
         $this->putJson('/api/avaliador/projetos/'.$projeto->id.'/avaliacao', $dados)->assertOk()->assertJsonPath('avaliacao.total', 8);
+        $estado = $projeto->fresh()->getAttributes();
         $dados['c1'] = 3;
-        $this->putJson('/api/avaliador/projetos/'.$projeto->id.'/avaliacao', $dados)->assertOk()->assertJsonPath('avaliacao.total', 9);
+        $dados['justificativa_geral'] = 'Tentativa de alterar uma avaliação publicada.';
+        $this->putJson('/api/avaliador/projetos/'.$projeto->id.'/avaliacao', $dados)->assertUnprocessable()->assertJsonValidationErrors('avaliacao');
+        $this->assertSame($estado, $projeto->fresh()->getAttributes());
         $this->assertCount(2, $projeto->fresh()->notas);
-        $this->assertSame(8.5, $projeto->fresh()->nota_final);
-        $this->getJson('/api/avaliador/projetos?status=avaliados')->assertJsonPath('projetos.data.0.minha_nota', 9);
+        $this->assertSame(8.0, $projeto->fresh()->nota_final);
+        $this->getJson('/api/avaliador/projetos?status=avaliados')->assertJsonPath('projetos.data.0.minha_nota', 8);
     }
 
     public function test_endpoints_exigem_avaliador_ativo_e_designado(): void

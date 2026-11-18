@@ -16,7 +16,7 @@ class ProjetoSeeder extends Seeder
     {
         $this->call([CategoriaSeeder::class, UsersSeeder::class]);
         $fonte = json_decode(file_get_contents(__DIR__.'/projetos-reais.json'), true, flags: JSON_THROW_ON_ERROR);
-        $normalizar = fn (string $nome): string => Str::lower(Str::ascii(trim($nome)));
+        $normalizar = fn (string $nome): string => Str::lower(Str::ascii(trim(str_replace('Angelo Lenart Homen', 'Angelo Lenart Homem', $nome))));
         $usuarios = User::where('perfil', User::PERFIL_AVALIADOR)->get()->keyBy(fn (User $usuario): string => $normalizar($usuario->name));
         $grupos = [];
         foreach ($fonte['grupos'] as $grupo => $nomes) {
@@ -25,7 +25,7 @@ class ProjetoSeeder extends Seeder
             }
             $grupos[$grupo] = [];
             foreach ($nomes as $nome) {
-                $chave = $normalizar($nome === 'Angelo Lenart Homem' ? 'Angelo Lenart Homen' : $nome);
+                $chave = $normalizar($nome);
                 $usuario = $usuarios->get($chave);
                 if ($usuario === null || ! $usuario->ativo) {
                     throw new RuntimeException('Avaliador não encontrado ou inativo: '.$nome);

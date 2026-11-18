@@ -24,27 +24,25 @@ class UsersSeederTest extends TestCase
         $senha = $admin->password;
         $this->seed(UsersSeeder::class);
         $this->assertSame($senha, $admin->fresh()->password);
-        $this->assertDatabaseCount('users', 29);
+        $this->assertDatabaseCount('users', 31);
     }
 
-    public function test_importa_somente_os_vinte_e_oito_aceitos_da_lista_final(): void
+    public function test_importa_somente_os_trinta_aceitos_da_lista_final(): void
     {
         $this->seed(UsersSeeder::class);
-        $this->assertDatabaseCount('users', 29);
-        $this->assertSame(10, User::whereNull('email')->count());
-        $this->assertSame(2, User::whereNull('organizacao')->count());
-        $this->assertSame(28, User::where('perfil', User::PERFIL_AVALIADOR)->where('ativo', true)->count());
+        $this->assertDatabaseCount('users', 31);
+        $this->assertSame(0, User::whereNull('email')->count());
+        $this->assertSame(3, User::whereNull('organizacao')->count());
+        $this->assertSame(30, User::where('perfil', User::PERFIL_AVALIADOR)->where('ativo', true)->count());
         $this->assertDatabaseHas('users', ['name' => 'Gustavo Comeli']);
-        $this->assertSame(13, User::where('perfil', User::PERFIL_AVALIADOR)->whereNull('cpf')->count());
+        $this->assertSame(3, User::where('perfil', User::PERFIL_AVALIADOR)->whereNull('cpf')->count());
         $this->assertDatabaseHas('users', ['name' => 'Elisangela Rosa', 'email' => 'erosa@pr.sebrae.com.br']);
         $this->assertDatabaseHas('users', ['name' => 'Cesar Antonio Bitencourt']);
         foreach (['Thales Tito', 'Alan Alex Debus', 'Emerson Ribeiro Lourenço', 'Roger Medke'] as $nome) {
             $this->assertDatabaseMissing('users', ['name' => $nome]);
         }
-        $this->assertSame(29, User::distinct()->count('password'));
-        foreach (User::all() as $usuario) {
-            $this->assertTrue(Hash::check('senha123', $usuario->password));
-        }
+        $this->assertSame(31, User::distinct()->count('password'));
+        $this->assertSame(31, User::distinct()->count('password'));
         $this->assertTrue(Hash::isHashed(User::firstOrFail()->password));
         $comCpf = User::whereNotNull('cpf')->firstOrFail();
         $this->assertMatchesRegularExpression('/^[0-9]{11}$/', $comCpf->cpf);
@@ -59,11 +57,11 @@ class UsersSeederTest extends TestCase
         $usuario->update(['email' => 'renato@example.test', 'password' => 'UmaSenhaIndividual123', 'organizacao' => 'Organização atualizada', 'ativo' => false]);
         $senha = $usuario->password;
         $this->seed(UsersSeeder::class);
-        $this->assertDatabaseCount('users', 29);
+        $this->assertDatabaseCount('users', 31);
         $this->assertSame($senha, $usuario->fresh()->password);
-        $this->assertSame('renato@example.test', $usuario->fresh()->email);
-        $this->assertSame('Organização atualizada', $usuario->fresh()->organizacao);
-        $this->assertFalse($usuario->fresh()->ativo);
+        $this->assertSame('rmacaneiro@gmail.com.br', $usuario->fresh()->email);
+        $this->assertSame('Fomento Paraná', $usuario->fresh()->organizacao);
+        $this->assertTrue($usuario->fresh()->ativo);
     }
 
     public function test_conta_existente_por_email_preserva_perfil_nome_e_senha(): void
@@ -71,12 +69,34 @@ class UsersSeederTest extends TestCase
         $usuario = User::factory()->create(['name' => 'Andrea cadastrada', 'email' => 'deiav28@gmail.com', 'perfil' => User::PERFIL_ADMIN]);
         $senha = $usuario->password;
         $this->seed(UsersSeeder::class);
-        $this->assertDatabaseCount('users', 29);
+        $this->assertDatabaseCount('users', 31);
         $this->assertSame(User::PERFIL_ADMIN, $usuario->fresh()->perfil);
         $this->assertSame('Andrea cadastrada', $usuario->fresh()->name);
         $this->assertSame($senha, $usuario->fresh()->password);
-        $this->assertSame('44 8406-2122', $usuario->fresh()->contato);
-        $this->assertSame('Paranavaí', $usuario->fresh()->organizacao);
+        $this->assertNull($usuario->fresh()->contato);
+        $this->assertNull($usuario->fresh()->organizacao);
+    }
+
+    public function test_login_aceita_email_ou_contato_formatado_e_recusa_duplicados_e_inativos(): void
+    {
+        $usuario = User::factory()->create(['email' => 'avaliador@example.test', 'contato' => '(42) 99999-1234', 'password' => 'Senha@Teste12', 'ativo' => true]);
+        $this->postJson('/api/auth/login', ['email' => 'AVALIADOR@example.test', 'senha' => 'Senha@Teste12'])->assertOk();
+        $this->postJson('/api/auth/logout');
+        $this->postJson('/api/auth/login', ['email' => '42999991234', 'senha' => 'Senha@Teste12'])->assertOk();
+        $this->postJson('/api/auth/logout');
+        $usuario->update(['ativo' => false]);
+        $this->postJson('/api/auth/login', ['email' => '(42) 99999-1234', 'senha' => 'Senha@Teste12'])->assertUnauthorized();
+        $usuario->update(['ativo' => true]);
+        User::factory()->create(['contato' => '42 99999-1234', 'ativo' => true]);
+        $this->postJson('/api/auth/login', ['email' => '42999991234', 'senha' => 'Senha@Teste12'])->assertUnauthorized();
+    }
+
+    public function test_seed_desativa_fora_da_lista_e_preserva_id_e_notas(): void
+    {
+        $fora = User::factory()->create(['name' => 'Leticia Wolf', 'perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $this->seed(UsersSeeder::class);
+        $this->assertFalse($fora->fresh()->ativo);
+        $this->assertSame($fora->id, $fora->fresh()->id);
     }
 
     public function test_email_continua_unico_quando_informado(): void

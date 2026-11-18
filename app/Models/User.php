@@ -30,6 +30,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'ultimo_login' => 'datetime',
+            'termos_aceitos_em' => 'datetime',
             'ativo' => 'boolean',
             'password' => 'hashed',
         ];
@@ -38,6 +39,11 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->perfil === self::PERFIL_ADMIN;
+    }
+
+    public function precisaAceitarTermos(): bool
+    {
+        return $this->perfil === self::PERFIL_AVALIADOR && $this->termos_aceitos_em === null;
     }
 
     /** Dados seguros para enviar ao front-end. */
@@ -50,6 +56,8 @@ class User extends Authenticatable
             'contato' => $this->contato,
             'organizacao' => $this->organizacao,
             'perfil' => $this->perfil,
+            'precisa_aceitar_termos' => $this->precisaAceitarTermos(),
+            'termos_aceitos_em' => $this->termos_aceitos_em?->toISOString(),
         ];
     }
 }

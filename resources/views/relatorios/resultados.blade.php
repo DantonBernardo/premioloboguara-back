@@ -12,7 +12,7 @@ tr { page-break-inside: avoid; } .code { margin-top: 5px; font-size: 6pt; color:
 footer { position: fixed; bottom: -12mm; font-size: 6pt; color: #63788c; } .page:after { content: counter(page); }
 </style></head><body>
 <footer>SECTI · Guarapuava · {{ $agora->timezone('America/Sao_Paulo')->format('d/m/Y H:i') }} · Página <span class="page"></span></footer>
-<header><span class="muted">PRÊMIO LOBO-GUARÁ · 2026</span><h1>Resultados dos projetos</h1><span class="muted">{{ $projetos->count() }} projeto(s) com as três avaliações concluídas · Resultado do recorte selecionado</span></header>
+<header><span class="muted">PRÊMIO LOBO-GUARÁ · 2026</span><h1>Resultados dos projetos</h1><span class="muted">{{ $projetos->count() }} projeto(s) com as duas avaliações concluídas · Resultado do recorte selecionado</span></header>
 <table><thead><tr><th style="width:43%">Projeto</th><th style="width:27%">Categoria</th><th style="width:10%">Média</th><th style="width:20%">Situação</th></tr></thead><tbody>
 @forelse($projetos as $p)
 <tr><td><strong>{{ $p['nome'] }}</strong><div class="code">{{ $p['codigo'] }}</div></td><td>{{ $p['categoria'] }}<div class="code">{{ $p['subcategoria'] }}</div></td><td><strong>{{ number_format($p['nota_final'], 2, ',', '.') }}</strong></td><td style="color:{{ $p['status'] === 'habilitada' ? '#28774c' : '#b3261e' }}"><strong>{{ $p['status_rotulo'] }}</strong></td></tr>

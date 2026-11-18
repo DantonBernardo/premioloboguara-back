@@ -80,20 +80,21 @@ class Avaliacao
 
             $notas = $atual->notas ?? [];
             $indice = collect($notas)->search(fn (array $nota): bool => (int) $nota['avaliador_id'] === $avaliador->id);
+            if ($indice !== false) {
+                throw ValidationException::withMessages([
+                    'avaliacao' => 'Esta avaliação já foi publicada. Para alterações na nota após a publicação, contate a SCTI pelo WhatsApp +55 42 3142-1883.',
+                ]);
+            }
             $nova = $this->calcular($atual->subcategoria->categoria->codigo, $dados) + [
                 'avaliador_id' => $avaliador->id,
                 'justificativa_geral' => $dados['justificativa_geral'] ?? null,
                 'justificativas' => array_filter($dados['justificativas'] ?? [], fn ($texto): bool => $texto !== null && $texto !== ''),
             ];
 
-            if ($indice === false) {
-                if (count($notas) >= config('avaliacao.limite_avaliacoes')) {
-                    throw ValidationException::withMessages(['notas' => 'O projeto já recebeu o máximo de três avaliações.']);
-                }
-                $notas[] = $nova;
-            } else {
-                $notas[$indice] = $nova;
+            if (count($notas) >= config('avaliacao.limite_avaliacoes')) {
+                throw ValidationException::withMessages(['notas' => 'O projeto já recebeu o máximo de duas avaliações.']);
             }
+            $notas[] = $nova;
 
             $atual->notas = $notas;
             $atual->save();

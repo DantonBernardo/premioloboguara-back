@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'limite_avaliacoes' => 3,
+    'limite_avaliacoes' => 2,
     'nota_maxima' => 10,
     'nota_corte' => 7,
     'categorias' => [

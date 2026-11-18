@@ -35,7 +35,7 @@ class AvaliacaoTest extends TestCase
 
     private function avaliador(): User
     {
-        return User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        return User::factory()->comTermosAceitos()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
     }
 
     private function enviar(Projeto $projeto, User $usuario, array $dados): TestResponse
@@ -80,6 +80,7 @@ class AvaliacaoTest extends TestCase
             if ($categoria === 'Projeto Inovador') {
                 $resposta->assertOk()->assertJsonPath('avaliacao.total', 8.5);
                 $dados['c1'] = $dados['c2'] = 3;
+                $projeto = Projeto::factory()->create(['subcategoria_id' => $this->classificacao($categoria), 'avaliador_ids' => [$usuario->id]]);
                 $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.total', 10);
                 $dados['bonus'] = 0.6;
                 $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('bonus');
@@ -89,21 +90,21 @@ class AvaliacaoTest extends TestCase
         }
     }
 
-    public function test_media_de_uma_duas_tres_e_correcao_sem_criar_outra_avaliacao(): void
+    public function test_media_de_uma_duas_e_bloqueio_de_alteracao_apos_publicacao(): void
     {
         $usuarios = collect(range(1, 4))->map(fn () => $this->avaliador());
         $projeto = Projeto::factory()->create(['avaliador_ids' => $usuarios->pluck('id')->all()]);
         $this->assertNull($projeto->fresh()->nota_final);
-        foreach ([8, 9, 10] as $indice => $total) {
+        foreach ([8, 9] as $indice => $total) {
             $this->enviar($projeto, $usuarios[$indice], $this->dados(['c1' => $indice === 0 ? 2 : 3, 'c2' => $indice === 2 ? 3 : 2]))->assertOk();
-            $this->assertEquals([8, 8.5, 9][$indice], $projeto->fresh()->nota_final);
+            $this->assertEquals([8, 8.5][$indice], $projeto->fresh()->nota_final);
         }
-        $this->enviar($projeto, $usuarios[3], $this->dados())->assertUnprocessable()->assertJsonValidationErrors('notas');
-        $this->assertCount(3, $projeto->fresh()->notas);
-        $this->enviar($projeto, $usuarios[0], $this->dados(['c1' => 3, 'c2' => 3]))->assertOk();
-        $this->assertCount(3, $projeto->fresh()->notas);
-        $this->assertEquals(9.67, $projeto->fresh()->nota_final);
-        $this->assertEquals(9.67, app(Relatorios::class)->gerar()['projetos'][0]['nota_final']);
+        $this->enviar($projeto, $usuarios[2], $this->dados())->assertUnprocessable()->assertJsonValidationErrors('notas');
+        $this->assertCount(2, $projeto->fresh()->notas);
+        $this->enviar($projeto, $usuarios[0], $this->dados(['c1' => 3, 'c2' => 3]))->assertUnprocessable()->assertJsonValidationErrors('avaliacao');
+        $this->assertCount(2, $projeto->fresh()->notas);
+        $this->assertEquals(8.5, $projeto->fresh()->nota_final);
+        $this->assertEquals(8.5, app(Relatorios::class)->gerar()['projetos'][0]['nota_final']);
     }
 
     public function test_zero_eliminatorio_do_pesquisador_esta_em_c1_e_c3(): void
@@ -116,7 +117,7 @@ class AvaliacaoTest extends TestCase
         $this->assertSame(7.0, $eliminada['total']);
         $projeto = Projeto::factory()->create(['subcategoria_id' => $this->classificacao('Pesquisador Inovador'), 'notas' => [$eliminada + ['avaliador_id' => 1]]]);
         $this->assertSame('inabilitada', app(Relatorios::class)->gerar()['projetos'][0]['status']);
-        $projeto->update(['notas' => [$permitida + ['avaliador_id' => 1]]]);
+        $projeto->update(['notas' => [$permitida + ['avaliador_id' => 1], $permitida + ['avaliador_id' => 2]]]);
         $this->assertSame('habilitada', app(Relatorios::class)->gerar()['projetos'][0]['status']);
     }
 
@@ -170,8 +171,8 @@ class AvaliacaoTest extends TestCase
     public function test_totais_extremos_exigem_justificativa_e_cinco_nao_exige(): void
     {
         $usuario = $this->avaliador();
-        $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
         foreach ([[1, 1, 1, 1], [3, 3, 2, 2]] as $valores) {
+            $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
             $dados = $this->dados(array_combine(['c1', 'c2', 'c3', 'c4'], $valores));
             unset($dados['justificativa_geral']);
             $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
@@ -182,6 +183,7 @@ class AvaliacaoTest extends TestCase
             $this->actingAs($usuario)->getJson('/api/avaliador/projetos/'.$projeto->id)->assertJsonPath('avaliacao.justificativa_geral', $dados['justificativa_geral']);
         }
         $dados = $this->dados(['c1' => 2, 'c2' => 1, 'c3' => 1, 'c4' => 1]);
+        $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
         unset($dados['justificativa_geral'], $dados['justificativas']);
         $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.total', 5);
     }
@@ -241,10 +243,10 @@ class AvaliacaoTest extends TestCase
         $this->assertNull($projeto->fresh()->nota_final);
     }
 
-    public function test_modelo_rejeita_quatro_avaliacoes(): void
+    public function test_modelo_rejeita_terceira_avaliacoes(): void
     {
         $this->expectException(ValidationException::class);
-        Projeto::factory()->create(['notas' => array_map(fn ($id) => $this->dados(['avaliador_id' => $id]), range(1, 4))]);
+        Projeto::factory()->create(['notas' => array_map(fn ($id) => $this->dados(['avaliador_id' => $id]), range(1, 3))]);
     }
 
     public function test_modelo_rejeita_avaliador_duplicado(): void
@@ -253,11 +255,28 @@ class AvaliacaoTest extends TestCase
         Projeto::factory()->create(['notas' => [$this->dados(['avaliador_id' => 1]), $this->dados(['avaliador_id' => 1])]]);
     }
 
-    public function test_banco_rejeita_quatro_avaliacoes_mesmo_sem_eloquent(): void
+    public function test_banco_rejeita_terceira_avaliacoes_mesmo_sem_eloquent(): void
     {
         $projeto = Projeto::factory()->create();
         $this->expectException(QueryException::class);
-        DB::table('projetos')->where('id', $projeto->id)->update(['notas' => json_encode([[], [], [], []])]);
+        DB::table('projetos')->where('id', $projeto->id)->update(['notas' => json_encode([[], [], []])]);
+    }
+
+    public function test_migracao_reduz_tres_notas_para_duas_e_recalcula_media(): void
+    {
+        $migracao = require database_path('migrations/2026_11_17_223806_limit_project_evaluations_to_two.php');
+        $migracao->down();
+        config(['avaliacao.limite_avaliacoes' => 3]);
+        $projeto = Projeto::factory()->create(['avaliador_ids' => [1, 2, 3], 'notas' => [
+            $this->dados(['avaliador_id' => 1]),
+            $this->dados(['avaliador_id' => 2, 'c1' => 3]),
+            $this->dados(['avaliador_id' => 3, 'c1' => 3, 'c2' => 3]),
+        ]]);
+        config(['avaliacao.limite_avaliacoes' => 2]);
+        $migracao->up();
+        $this->assertCount(2, $projeto->fresh()->notas);
+        $this->assertSame([1, 2], $projeto->fresh()->avaliador_ids);
+        $this->assertSame(8.5, $projeto->fresh()->nota_final);
     }
 
     public function test_categoria_desconhecida_nao_usa_regras_de_outra_categoria(): void

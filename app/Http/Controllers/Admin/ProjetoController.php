@@ -38,7 +38,7 @@ class ProjetoController extends Controller
         $status = match (true) {
             $zero => 'inabilitada',
             $notas->isEmpty() => 'sem_avaliacao',
-            $notas->count() < 3 => 'em_avaliacao',
+            $notas->count() < 2 => 'em_avaliacao',
             $projeto->nota_final >= config('avaliacao.nota_corte') => 'habilitada',
             default => 'inabilitada',
         };

@@ -44,7 +44,7 @@ class RelatorioController extends Controller
             $projetos = $projetos->filter(function (array $projeto) use ($andamentos): bool {
                 $andamento = match ($projeto['avaliacoes_recebidas']) {
                     0 => 'aguardando',
-                    1, 2 => 'em_processo',
+                    1 => 'em_processo',
                     default => 'finalizados',
                 };
 
@@ -65,7 +65,7 @@ class RelatorioController extends Controller
         $dados = $this->dados($request);
         if ($request->input('tipo') === 'resultados') {
             $projetos = collect($dados['projetos'])
-                ->filter(fn (array $projeto): bool => $projeto['avaliacoes_recebidas'] === 3 && in_array($projeto['status'], ['habilitada', 'inabilitada'], true))
+                ->filter(fn (array $projeto): bool => $projeto['avaliacoes_recebidas'] === 2 && in_array($projeto['status'], ['habilitada', 'inabilitada'], true))
                 ->sortByDesc('nota_final')->values();
 
             return Pdf::loadView('relatorios.resultados', ['projetos' => $projetos, 'agora' => now()])

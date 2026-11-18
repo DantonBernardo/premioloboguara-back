@@ -20,14 +20,14 @@ class DashboardController extends Controller
     {
         return [
             'projetos' => Projeto::query()->count(),
-            'avaliadores' => User::query()->where('perfil', User::PERFIL_AVALIADOR)->count(),
+            'avaliadores' => User::query()->where('perfil', User::PERFIL_AVALIADOR)->where('ativo', true)->count(),
         ];
     }
 
     public function __invoke(): JsonResponse
     {
         $tamanho = DB::getDriverName() === 'pgsql' ? 'jsonb_array_length(notas)' : 'json_array_length(notas)';
-        $andamento = Projeto::query()->selectRaw("SUM(CASE WHEN {$tamanho} = 0 THEN 1 ELSE 0 END) AS aguardando, SUM(CASE WHEN {$tamanho} BETWEEN 1 AND 2 THEN 1 ELSE 0 END) AS em_processo, SUM(CASE WHEN {$tamanho} = 3 THEN 1 ELSE 0 END) AS finalizados")->first();
+        $andamento = Projeto::query()->selectRaw("SUM(CASE WHEN {$tamanho} = 0 THEN 1 ELSE 0 END) AS aguardando, SUM(CASE WHEN {$tamanho} = 1 THEN 1 ELSE 0 END) AS em_processo, SUM(CASE WHEN {$tamanho} = 2 THEN 1 ELSE 0 END) AS finalizados")->first();
 
         return response()->json([
             'atualizado_em' => now()->toIso8601String(),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,15 +21,16 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $dados = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
             'senha' => ['required', 'string'],
         ], [
-            'email.required' => 'Informe o e-mail.',
+            'email.required' => 'Informe o e-mail ou contato.',
             'email.email' => 'Informe um e-mail válido.',
             'senha.required' => 'Informe a senha.',
         ]);
 
-        $email = Str::lower(trim($dados['email']));
+        $login = Str::lower(trim($dados['email']));
+        $email = str_contains($login, '@') ? $login : preg_replace('/\D/', '', $login);
         $chave = 'login:'.$email.'|'.$request->ip();
 
         if (RateLimiter::tooManyAttempts($chave, 5)) {
@@ -39,12 +41,21 @@ class AuthController extends Controller
             ], 429);
         }
 
-        $ok = Auth::attempt(['email' => $email, 'password' => $dados['senha'], 'ativo' => true]);
+        $usuario = null;
+        if (str_contains($login, '@')) {
+            $usuario = User::whereRaw('LOWER(email) = ?', [$login])->where('ativo', true)->first();
+        } elseif (strlen($email) >= 8 && preg_match('/^[0-9+().\s-]+$/', $login)) {
+            $candidatos = User::where('ativo', true)->whereNotNull('contato')->get()->filter(fn (User $user): bool => preg_replace('/\D/', '', $user->contato) === $email);
+            if ($candidatos->count() === 1) {
+                $usuario = $candidatos->first();
+            }
+        }
+        $ok = $usuario !== null && Auth::attempt(['id' => $usuario->id, 'password' => $dados['senha'], 'ativo' => true]);
 
         if (! $ok) {
             RateLimiter::hit($chave, 60);
 
-            return response()->json(['erro' => 'E-mail ou senha inválidos.'], 401);
+            return response()->json(['erro' => 'Login ou senha inválidos.'], 401);
         }
 
         RateLimiter::clear($chave);

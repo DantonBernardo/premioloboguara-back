@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureAceiteAvaliador;
 use App\Http\Middleware\EnsurePerfil;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // A aplicação roda atrás do nginx (container frontend) e do proxy HTTPS do servidor.
         $middleware->trustProxies(at: '*');
-        $middleware->alias(['perfil' => EnsurePerfil::class]);
+        $middleware->alias(['perfil' => EnsurePerfil::class, 'aceite.avaliador' => EnsureAceiteAvaliador::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

@@ -25,7 +25,7 @@ class GestaoAdminTest extends TestCase
         User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => false]);
         User::factory()->create(['perfil' => User::PERFIL_ADMIN]);
         Projeto::factory()->count(3)->create();
-        $this->actingAs($admin)->getJson('/api/admin/indicadores')->assertOk()->assertExactJson(['projetos' => 3, 'avaliadores' => 3]);
+        $this->actingAs($admin)->getJson('/api/admin/indicadores')->assertOk()->assertExactJson(['projetos' => 3, 'avaliadores' => 2]);
         Projeto::factory()->create();
         $this->getJson('/api/admin/indicadores')->assertJsonPath('projetos', 4);
         $this->getJson('/api/admin/dashboard')->assertOk()->assertJsonPath('resumo.projetos', 4)
@@ -34,14 +34,23 @@ class GestaoAdminTest extends TestCase
             ->assertJsonPath('por_categoria.2.total', 4);
     }
 
+    public function test_equipe_do_relatorio_nao_inclui_contas_desativadas(): void
+    {
+        $ativo = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $inativo = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => false]);
+        $dados = $this->actingAs($this->admin())->getJson('/api/admin/relatorios')->assertOk();
+        $this->assertSame([$ativo->id], array_column($dados->json('avaliadores'), 'id'));
+        $this->assertNotContains($inativo->id, array_column($dados->json('avaliadores'), 'id'));
+    }
+
     public function test_relatorio_retorna_medias_situacoes_e_faixas_reais(): void
     {
         $admin = $this->admin();
-        Projeto::factory()->create(['notas' => [['avaliador_id' => 1, 'c1' => 3, 'c2' => 3, 'c3' => 2, 'c4' => 1]]]);
-        Projeto::factory()->create(['notas' => [['avaliador_id' => 2, 'c1' => 1, 'c2' => 1, 'c3' => 1, 'c4' => 1]]]);
+        Projeto::factory()->create(['notas' => [['avaliador_id' => 1, 'c1' => 3, 'c2' => 3, 'c3' => 2, 'c4' => 1], ['avaliador_id' => (1) + 100, 'c1' => 3, 'c2' => 3, 'c3' => 2, 'c4' => 1]]]);
+        Projeto::factory()->create(['notas' => [['avaliador_id' => 2, 'c1' => 1, 'c2' => 1, 'c3' => 1, 'c4' => 1], ['avaliador_id' => (2) + 100, 'c1' => 1, 'c2' => 1, 'c3' => 1, 'c4' => 1]]]);
         Projeto::factory()->create();
         $this->actingAs($admin)->getJson('/api/admin/relatorios')->assertOk()
-            ->assertJsonPath('totais.projetos', 3)->assertJsonPath('totais.avaliacoes_recebidas', 2)
+            ->assertJsonPath('totais.projetos', 3)->assertJsonPath('totais.avaliacoes_recebidas', 4)
             ->assertJsonPath('totais.media_geral', 6.5)->assertJsonPath('totais.habilitadas', 1)
             ->assertJsonPath('distribuicao_notas.0.total', 1)->assertJsonPath('distribuicao_notas.3.total', 1)
             ->assertJsonPath('por_status.3.total', 1)->assertJsonPath('projetos.data.0.nota_final', 9)
@@ -53,7 +62,7 @@ class GestaoAdminTest extends TestCase
         $admin = $this->admin();
         $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR]);
         $pesquisa = Categoria::where('codigo', 1)->sole()->subcategorias()->firstOrFail();
-        Projeto::factory()->create(['subcategoria_id' => $pesquisa->id, 'avaliador_ids' => [$avaliador->id], 'notas' => [['avaliador_id' => $avaliador->id, 'c1' => 3, 'c2' => 2, 'c3' => 3, 'c4' => 1]]]);
+        Projeto::factory()->create(['subcategoria_id' => $pesquisa->id, 'avaliador_ids' => [$avaliador->id], 'notas' => [['avaliador_id' => $avaliador->id, 'c1' => 3, 'c2' => 2, 'c3' => 3, 'c4' => 1], ['avaliador_id' => ($avaliador->id) + 100, 'c1' => 3, 'c2' => 2, 'c3' => 3, 'c4' => 1]]]);
         Projeto::factory()->create(['avaliador_ids' => [$avaliador->id]]);
         $this->actingAs($admin)->getJson('/api/admin/relatorios?categoria=1&status=habilitada')->assertOk()
             ->assertJsonPath('totais.projetos', 1)->assertJsonPath('totais.media_geral', 9)
@@ -102,7 +111,7 @@ class GestaoAdminTest extends TestCase
 
     public function test_pdf_de_resultados_contem_apenas_resultados_concluidos_do_filtro(): void
     {
-        $notas = collect([1, 2, 3])->map(fn (int $id): array => ['avaliador_id' => $id, 'c1' => 3, 'c2' => 3, 'c3' => 2, 'c4' => 2])->all();
+        $notas = collect([1, 2])->map(fn (int $id): array => ['avaliador_id' => $id, 'c1' => 3, 'c2' => 3, 'c3' => 2, 'c4' => 2])->all();
         $aprovado = Projeto::factory()->create(['notas' => $notas]);
         Projeto::factory()->create(['notas' => [$notas[0]]]);
         Projeto::factory()->create(['notas' => collect($notas)->map(fn (array $nota): array => array_replace($nota, ['c1' => 0]))->all()]);

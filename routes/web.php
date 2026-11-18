@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ConfiguracaoController;
+use App\Http\Controllers\TermosAvaliadorController;
 use Illuminate\Support\Facades\Route;
 
 // API consumida pelo front-end React (mesmo domínio, sessão por cookie + CSRF).
@@ -19,12 +20,16 @@ Route::prefix('api')->group(function () {
     Route::patch('/configuracoes/perfil', [ConfiguracaoController::class, 'update'])->middleware('auth');
 
     Route::middleware('perfil:avaliador')->prefix('avaliador')->group(function () {
-        Route::get('/categorias', CategoriaController::class);
-        Route::get('/projetos', [AvaliacaoController::class, 'index']);
-        Route::get('/projetos/por-codigo/{chave}/{categoria}/{subcategoria}', [AvaliacaoController::class, 'showPorCodigo'])
-            ->where(['chave' => '[0-9]{8}', 'categoria' => '[1-9][0-9]*', 'subcategoria' => '[1-9][0-9]*']);
-        Route::get('/projetos/{projeto}', [AvaliacaoController::class, 'show']);
-        Route::put('/projetos/{projeto}/avaliacao', [AvaliacaoController::class, 'update']);
+        Route::get('/termos', [TermosAvaliadorController::class, 'show']);
+        Route::post('/termos/aceite', [TermosAvaliadorController::class, 'store']);
+        Route::middleware('aceite.avaliador')->group(function () {
+            Route::get('/categorias', CategoriaController::class);
+            Route::get('/projetos', [AvaliacaoController::class, 'index']);
+            Route::get('/projetos/por-codigo/{chave}/{categoria}/{subcategoria}', [AvaliacaoController::class, 'showPorCodigo'])
+                ->where(['chave' => '[0-9]{8}', 'categoria' => '[1-9][0-9]*', 'subcategoria' => '[1-9][0-9]*']);
+            Route::get('/projetos/{projeto}', [AvaliacaoController::class, 'show']);
+            Route::put('/projetos/{projeto}/avaliacao', [AvaliacaoController::class, 'update']);
+        });
     });
 
     Route::middleware('perfil:admin')->prefix('admin')->group(function () {

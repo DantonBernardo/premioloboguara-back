@@ -136,7 +136,7 @@ class CodigoProjetoTest extends TestCase
         $categoria->update(['nome' => 'Pesquisa científica']);
         $projeto = Projeto::factory()->create([
             'subcategoria_id' => $categoria->subcategorias()->firstOrFail()->id,
-            'notas' => [['avaliador_id' => 1, 'c1' => 3, 'c2' => 0, 'c3' => 3, 'c4' => 2]],
+            'notas' => [['avaliador_id' => 1, 'c1' => 3, 'c2' => 0, 'c3' => 3, 'c4' => 2], ['avaliador_id' => 2, 'c1' => 3, 'c2' => 0, 'c3' => 3, 'c4' => 2]],
         ]);
         $this->assertEquals(8, $projeto->nota_final);
         $this->assertTrue($projeto->notas[0]['habilitada']);
@@ -146,14 +146,14 @@ class CodigoProjetoTest extends TestCase
 
     public function test_consulta_por_codigo_respeita_designacao_e_catalogo_exige_login(): void
     {
-        $usuario = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $usuario = User::factory()->comTermosAceitos()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
         $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
         $url = '/api/avaliador/projetos/por-codigo/'.$projeto->codigo;
         $this->getJson('/api/avaliador/categorias')->assertUnauthorized();
         $this->getJson($url)->assertUnauthorized();
         $this->actingAs($usuario)->getJson('/api/avaliador/categorias')->assertOk()->assertJsonCount(4)->assertJsonPath('2.codigo', 3);
         $this->getJson($url)->assertOk()->assertJsonPath('projeto.codigo', $projeto->codigo)->assertJsonPath('projeto.categoria', 'Projeto Inovador');
-        $outro = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $outro = User::factory()->comTermosAceitos()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
         $this->actingAs($outro)->getJson($url)->assertForbidden();
         $this->getJson('/api/avaliador/projetos/por-codigo/'.$projeto->chave.'/1/1')->assertNotFound();
     }
@@ -161,8 +161,8 @@ class CodigoProjetoTest extends TestCase
     public function test_seed_de_projetos_reais_preserva_codigos_e_avaliacoes_ao_reexecutar(): void
     {
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 147);
-        $this->assertSame(147, Projeto::distinct()->count('chave'));
+        $this->assertDatabaseCount('projetos', 171);
+        $this->assertSame(171, Projeto::distinct()->count('chave'));
         foreach (Projeto::with('subcategoria.categoria')->get() as $item) {
             $this->assertMatchesRegularExpression('/^[0-9]{8}$/', $item->chave);
             $this->assertSame($item->chave.'/'.$item->subcategoria->categoria->codigo.'/'.$item->subcategoria->codigo, $item->codigo);
@@ -171,7 +171,7 @@ class CodigoProjetoTest extends TestCase
         $projeto = Projeto::firstOrFail();
         $projeto->update(['notas' => [['avaliador_id' => $projeto->avaliador_ids[0], 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2]]]);
         $this->seed(ProjetoSeeder::class);
-        $this->assertDatabaseCount('projetos', 147);
+        $this->assertDatabaseCount('projetos', 171);
         $this->assertSame($codigos, Projeto::orderBy('id')->pluck('codigo', 'id')->all());
         $this->assertCount(1, $projeto->fresh()->notas);
         $this->assertEquals(8, $projeto->fresh()->nota_final);

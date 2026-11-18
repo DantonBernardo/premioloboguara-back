@@ -36,6 +36,7 @@ class Relatorios
             ->when($situacoes !== [], fn (Collection $projetos) => $projetos->whereIn('status', $situacoes)->values());
         $avaliadores = User::query()
             ->where('perfil', User::PERFIL_AVALIADOR)
+            ->where('ativo', true)
             ->orderBy('name')
             ->get(['id', 'name', 'ativo']);
 
@@ -80,16 +81,15 @@ class Relatorios
     {
         $notas = collect($projeto->notas ?? [])->filter(fn ($n) => is_array($n) && isset($n['avaliador_id']));
         $designados = collect($projeto->avaliador_ids ?? [])->map(fn ($id) => (int) $id)->unique();
-        $avaliaram = $notas->pluck('avaliador_id')->map(fn ($id) => (int) $id)->unique();
 
         $calculadas = app(Avaliacao::class)->normalizar($projeto->subcategoria->categoria->codigo, $notas->values()->all());
         $notaFinal = $projeto->nota_final;
         $zeroEmPeso3 = collect($calculadas)->contains('zero_eliminatorio', true);
-        $pendentes = $designados->diff($avaliaram)->count();
 
         $status = match (true) {
+            $zeroEmPeso3 => 'inabilitada',
             $notas->isEmpty() => 'sem_avaliacao',
-            $pendentes > 0 => 'em_avaliacao',
+            $notas->count() < config('avaliacao.limite_avaliacoes') => 'em_avaliacao',
             $notaFinal >= self::NOTA_CORTE && ! $zeroEmPeso3 => 'habilitada',
             default => 'inabilitada',
         };

@@ -42,4 +42,12 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function comTermosAceitos(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'termos_aceitos_em' => now(),
+            'termos_versao' => config('termos_avaliador.versao'),
+        ]);
+    }
 }

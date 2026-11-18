@@ -71,14 +71,14 @@ class RankingAdminTest extends TestCase
     public function test_nova_avaliacao_atualiza_o_ranking_e_pendentes_nao_sao_habilitados(): void
     {
         $admin = $this->admin();
-        $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
+        $avaliador = User::factory()->comTermosAceitos()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
         $lider = Projeto::factory()->create(['notas' => [$this->nota(1)]]);
         $projeto = Projeto::factory()->create(['avaliador_ids' => [$avaliador->id]]);
         $this->actingAs($avaliador)->putJson('/api/avaliador/projetos/'.$projeto->id.'/avaliacao', ['c1' => 3, 'c2' => 2, 'c3' => 2, 'c4' => 2])->assertOk();
         $this->actingAs($admin)->getJson('/api/admin/ranking')->assertOk()->assertJsonPath('projetos.data.0.id', $projeto->id)
             ->assertJsonPath('projetos.data.0.nota_final', 9)->assertJsonPath('projetos.data.0.status', 'em_avaliacao')
             ->assertJsonPath('projetos.data.1.id', $lider->id);
-        $projeto->update(['notas' => [$this->nota($avaliador->id, 3), $this->nota($avaliador->id + 100, 3), $this->nota($avaliador->id + 101, 3)]]);
+        $projeto->update(['notas' => [$this->nota($avaliador->id, 3), $this->nota($avaliador->id + 100, 3)]]);
         $this->getJson('/api/admin/ranking')->assertJsonPath('projetos.data.0.status', 'habilitada')->assertJsonPath('resumo.finalizados', 1);
     }
 
