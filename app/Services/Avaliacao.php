@@ -87,6 +87,7 @@ class Avaliacao
             }
             $nova = $this->calcular($atual->subcategoria->categoria->codigo, $dados) + [
                 'avaliador_id' => $avaliador->id,
+                'enviada_em' => now()->toISOString(),
                 'justificativa_geral' => $dados['justificativa_geral'] ?? null,
                 'justificativas' => array_filter($dados['justificativas'] ?? [], fn ($texto): bool => $texto !== null && $texto !== ''),
             ];

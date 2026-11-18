@@ -49,6 +49,12 @@ class AvaliacaoController extends Controller
                     ->orWhereHas('subcategoria', fn ($sub) => $sub->whereRaw("LOWER(nome) LIKE ? ESCAPE '!'", [$termo]));
             });
         }
+        if (($filtros['status'] ?? null) === 'avaliados') {
+            $dataAvaliacao = DB::getDriverName() === 'pgsql'
+                ? "COALESCE((SELECT NULLIF(n->>'enviada_em', '')::timestamptz FROM jsonb_array_elements(projetos.notas::jsonb) n WHERE (n->>'avaliador_id')::bigint = ? LIMIT 1), projetos.updated_at)"
+                : "julianday(COALESCE((SELECT NULLIF(json_extract(n.value, '$.enviada_em'), '') FROM json_each(projetos.notas) n WHERE CAST(json_extract(n.value, '$.avaliador_id') AS INTEGER) = ? LIMIT 1), projetos.updated_at))";
+            $consulta->orderByRaw($dataAvaliacao.' DESC', [$id]);
+        }
         $projetos = $consulta->orderByDesc('id')->paginate(10)->withQueryString()->through(function (Projeto $projeto) use ($id): array {
             $nota = collect($projeto->notas ?? [])->firstWhere('avaliador_id', $id);
 
@@ -83,7 +89,7 @@ class AvaliacaoController extends Controller
         $rascunho = DB::table('avaliacao_rascunhos')->where('projeto_id', $projeto->id)->where('avaliador_id', $request->user()->id)->first();
 
         return response()->json([
-            'projeto' => $projeto->only(['id', 'codigo', 'nome', 'subcategoria_id']) + [
+            'projeto' => $projeto->only(['id', 'codigo', 'nome', 'subcategoria_id', 'documento_url']) + [
                 'categoria' => $projeto->subcategoria->categoria->nome,
                 'subcategoria' => $projeto->subcategoria->nome,
             ],

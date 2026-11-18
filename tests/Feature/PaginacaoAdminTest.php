@@ -88,7 +88,7 @@ class PaginacaoAdminTest extends TestCase
         }
         unset($nota);
         $projeto->update(['notas' => $avaliacoes]);
-        $notas = $projeto->notas;
+        $notas = $projeto->fresh()->notas;
         $this->seed(ProjetoSeeder::class);
         $this->assertDatabaseCount('projetos', 171);
         $this->assertSame($codigo, $projeto->fresh()->codigo);

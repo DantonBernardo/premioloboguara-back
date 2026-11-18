@@ -50,7 +50,12 @@ class ProjetoSeeder extends Seeder
                 throw new RuntimeException('O projeto '.$linha['nome'].' precisa de pelo menos um avaliador da área da categoria.');
             }
 
-            return ['nome' => $linha['nome'], 'subcategoria_id' => $subcategoria->id, 'avaliador_ids' => $grupos[$linha['grupo']]];
+            $documentoUrl = $linha['documento_url'] ?? null;
+            if (! is_string($documentoUrl) || ! preg_match('~^https://drive\.google\.com/file/d/[a-zA-Z0-9_-]+/view$~', $documentoUrl)) {
+                throw new RuntimeException('Documento do projeto ausente ou inválido: '.$linha['nome']);
+            }
+
+            return ['nome' => $linha['nome'], 'subcategoria_id' => $subcategoria->id, 'avaliador_ids' => $grupos[$linha['grupo']], 'documento_url' => $documentoUrl];
         });
         $designados = $preparados->pluck('avaliador_ids')->flatten()->unique()->all();
         $semProjetos = $usuarios->filter(fn (User $usuario): bool => $usuario->ativo && ! in_array($usuario->id, $designados, true));
@@ -68,7 +73,12 @@ class ProjetoSeeder extends Seeder
                     throw new RuntimeException('A distribuição excluiria um avaliador com nota registrada no projeto '.$projeto->id.'.');
                 }
                 $projeto->avaliador_ids = $dados['avaliador_ids'];
-                $projeto->save();
+                $projeto->documento_url = $dados['documento_url'];
+                if ($projeto->exists) {
+                    Projeto::withoutTimestamps(fn (): bool => $projeto->save());
+                } else {
+                    $projeto->save();
+                }
             }
         });
         $this->command?->info($preparados->count().' projetos reais importados; notas e códigos existentes preservados.');

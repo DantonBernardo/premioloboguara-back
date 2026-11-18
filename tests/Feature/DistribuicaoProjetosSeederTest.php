@@ -28,8 +28,11 @@ class DistribuicaoProjetosSeederTest extends TestCase
             $this->assertNull($projeto->nota_final);
             $this->assertSame($linha['categoria'], $projeto->subcategoria->categoria->codigo);
             $this->assertSame($linha['subcategoria'], $projeto->subcategoria->codigo);
+            $this->assertSame($linha['documento_url'], $projeto->documento_url);
+            $this->assertMatchesRegularExpression('~^https://drive\.google\.com/file/d/[a-zA-Z0-9_-]+/view$~', $projeto->documento_url);
         }
         $this->assertFalse(collect($fonte['grupos'])->flatten()->contains('Leticia Wolf'));
+        $this->assertSame(171, Projeto::distinct()->count('documento_url'));
         $this->assertTrue(collect($fonte['grupos'])->flatten()->contains('Henrique Domakoski'));
         $andrea = User::where('name', 'Andrea Alves Vieira')->sole();
         $this->actingAs($andrea)->postJson('/api/avaliador/termos/aceite', [
@@ -53,10 +56,14 @@ class DistribuicaoProjetosSeederTest extends TestCase
         $this->seed(ProjetoSeeder::class);
         $projeto = Projeto::firstOrFail();
         $projeto->update(['notas' => [['avaliador_id' => $projeto->avaliador_ids[0], 'c1' => 2, 'c2' => 2, 'c3' => 2, 'c4' => 2, 'justificativa_geral' => 'Avaliação real.']]]);
-        $estado = Projeto::orderBy('id')->get(['id', 'codigo', 'notas', 'avaliador_ids'])->toArray();
+        $documentoUrl = $projeto->documento_url;
+        $projeto->update(['documento_url' => null]);
+        $estado = Projeto::orderBy('id')->get(['id', 'codigo', 'notas', 'avaliador_ids', 'updated_at'])->toArray();
+        $this->travel(1)->days();
         $this->seed(ProjetoSeeder::class);
         $this->assertDatabaseCount('projetos', 171);
-        $this->assertSame($estado, Projeto::orderBy('id')->get(['id', 'codigo', 'notas', 'avaliador_ids'])->toArray());
+        $this->assertSame($estado, Projeto::orderBy('id')->get(['id', 'codigo', 'notas', 'avaliador_ids', 'updated_at'])->toArray());
+        $this->assertSame($documentoUrl, $projeto->fresh()->documento_url);
     }
 
     public function test_todos_os_aceitos_participam_com_carga_equilibrada_e_especialista_em_cada_dupla(): void

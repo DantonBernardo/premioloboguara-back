@@ -77,7 +77,7 @@ class RascunhoAvaliacaoTest extends TestCase
         $nota = ['c1' => 0, 'c2' => 3, 'c3' => 2, 'c4' => 2];
         $this->putJson($url.'/avaliacao', $nota)->assertUnprocessable();
         $this->assertDatabaseCount('avaliacao_rascunhos', 2);
-        $this->putJson($url.'/avaliacao', $nota + ['justificativas' => ['c1' => 'Sem evidências.']])->assertOk()->assertJsonPath('avaliacao.total', 7)->assertJsonPath('avaliacao.habilitada', false);
+        $this->putJson($url.'/avaliacao', $nota + ['justificativas' => ['c1' => 'Sem evidências suficientes para o critério.']])->assertOk()->assertJsonPath('avaliacao.total', 7)->assertJsonPath('avaliacao.habilitada', false);
         $this->assertDatabaseMissing('avaliacao_rascunhos', ['avaliador_id' => $um->id]);
         $this->assertDatabaseHas('avaliacao_rascunhos', ['avaliador_id' => $dois->id]);
         $this->putJson($url.'/rascunho', ['notas' => ['c1' => 2], 'etapa' => 0])->assertConflict();

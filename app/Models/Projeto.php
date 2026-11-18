@@ -12,7 +12,7 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-#[Fillable(['nome', 'subcategoria_id', 'notas', 'avaliador_ids'])]
+#[Fillable(['nome', 'subcategoria_id', 'notas', 'avaliador_ids', 'documento_url'])]
 class Projeto extends Model
 {
     use HasFactory;

@@ -135,6 +135,7 @@ class GestaoAdminTest extends TestCase
         $avaliador = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
         $pendente = User::factory()->create(['perfil' => User::PERFIL_AVALIADOR, 'ativo' => true]);
         $projeto = Projeto::factory()->create([
+            'documento_url' => 'https://drive.google.com/file/d/documento-administrativo/view',
             'avaliador_ids' => [$avaliador->id, $pendente->id],
             'notas' => [['avaliador_id' => $avaliador->id, 'c1' => 0, 'c2' => 3, 'c3' => 2, 'c4' => 2, 'justificativas' => ['c1' => 'Sem evidências.'], 'justificativa_geral' => 'Análise registrada.']],
         ]);
@@ -143,6 +144,7 @@ class GestaoAdminTest extends TestCase
         $this->actingAs($avaliador)->getJson($url)->assertForbidden();
         $this->actingAs($this->admin())->getJson($url)->assertOk()
             ->assertJsonPath('projeto.id', $projeto->id)->assertJsonPath('projeto.status', 'inabilitada')
+            ->assertJsonPath('projeto.documento_url', $projeto->documento_url)
             ->assertJsonPath('projeto.nota_final', 7)->assertJsonCount(2, 'avaliadores')
             ->assertJsonPath('avaliadores.0.nome', $avaliador->name)
             ->assertJsonPath('avaliadores.0.avaliacao.justificativas.c1', 'Sem evidências.')
@@ -151,7 +153,7 @@ class GestaoAdminTest extends TestCase
             ->assertJsonPath('avaliadores.1.avaliacao', null)->assertJsonMissingPath('avaliadores.0.password');
         $this->getJson('/api/admin/projetos/99999999')->assertNotFound();
         $vazio = Projeto::factory()->create();
-        $this->getJson('/api/admin/projetos/'.$vazio->id)->assertOk()->assertJsonPath('projeto.status', 'sem_avaliacao')->assertJsonPath('projeto.nota_final', null);
+        $this->getJson('/api/admin/projetos/'.$vazio->id)->assertOk()->assertJsonPath('projeto.status', 'sem_avaliacao')->assertJsonPath('projeto.nota_final', null)->assertJsonPath('projeto.documento_url', null);
     }
 
     public function test_pdf_da_ficha_inclui_avaliacoes_e_exige_admin(): void

@@ -176,8 +176,12 @@ class AvaliacaoTest extends TestCase
             $dados = $this->dados(array_combine(['c1', 'c2', 'c3', 'c4'], $valores));
             unset($dados['justificativa_geral']);
             $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
-            $dados['justificativa_geral'] = '   ';
-            $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
+            foreach (['   ', "\u{00a0}\n\t", str_repeat("\u{200b}\u{feff}", 20), 'Curta', str_repeat('á', 19), 'Motivo'.str_repeat(' ', 40).'curto'] as $invalida) {
+                $dados['justificativa_geral'] = $invalida;
+                $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativa_geral');
+                $this->assertSame([], $projeto->fresh()->notas);
+                $this->assertNull($projeto->fresh()->nota_final);
+            }
             $dados['justificativa_geral'] = 'Evidências justificam a nota atribuída.';
             $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.justificativa_geral', $dados['justificativa_geral']);
             $this->actingAs($usuario)->getJson('/api/avaliador/projetos/'.$projeto->id)->assertJsonPath('avaliacao.justificativa_geral', $dados['justificativa_geral']);
@@ -186,6 +190,34 @@ class AvaliacaoTest extends TestCase
         $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
         unset($dados['justificativa_geral'], $dados['justificativas']);
         $this->enviar($projeto, $usuario, $dados)->assertOk()->assertJsonPath('avaliacao.total', 5);
+    }
+
+    #[DataProvider('categorias')]
+    public function test_zero_em_criterio_de_tres_pontos_exige_texto_minimo_em_todas_as_categorias(string $categoria, array $maximos): void
+    {
+        $usuario = $this->avaliador();
+        foreach (array_combine(['c1', 'c2', 'c3', 'c4'], $maximos) as $codigo => $maximo) {
+            if ($maximo !== 3) {
+                continue;
+            }
+            $projeto = Projeto::factory()->create(['subcategoria_id' => $this->classificacao($categoria), 'avaliador_ids' => [$usuario->id]]);
+            foreach ([null, []] as $justificativas) {
+                $this->enviar($projeto, $usuario, $this->dados([$codigo => 0, 'justificativas' => $justificativas]))
+                    ->assertUnprocessable()->assertJsonValidationErrors('justificativas.'.$codigo);
+                $this->assertSame([], $projeto->fresh()->notas);
+            }
+            foreach ([null, '', '   ', "\u{00a0}\n\t", str_repeat("\u{200b}\u{feff}", 20), 'Curta', str_repeat('á', 19), 'Motivo'.str_repeat(' ', 40).'curto'] as $invalida) {
+                $dados = $this->dados([$codigo => 0, 'justificativas' => [$codigo => $invalida]]);
+                $this->enviar($projeto, $usuario, $dados)->assertUnprocessable()->assertJsonValidationErrors('justificativas.'.$codigo);
+                $this->assertSame([], $projeto->fresh()->notas);
+                $this->assertNull($projeto->fresh()->nota_final);
+            }
+            $dados = $this->dados([$codigo => 0, 'justificativas' => [$codigo => '  '.str_repeat('á', 20).'  ']]);
+            $this->enviar($projeto, $usuario, $dados)->assertOk()
+                ->assertJsonPath('avaliacao.justificativas.'.$codigo, str_repeat('á', 20))
+                ->assertJsonPath('avaliacao.zero_eliminatorio', true)
+                ->assertJsonPath('avaliacao.habilitada', false);
+        }
     }
 
     public function test_nomes_descricoes_e_pesos_sao_identicos_a_aba_criterios_e_rubricas(): void
@@ -287,8 +319,10 @@ class AvaliacaoTest extends TestCase
 
     public function test_migracao_preserva_avaliacoes_e_preenche_media_existente(): void
     {
+        $limite = require database_path('migrations/2026_11_17_223806_limit_project_evaluations_to_two.php');
         $migracao = require database_path('migrations/2026_11_14_174531_add_nota_final_to_projetos_table.php');
         $normalizacao = require database_path('migrations/2026_11_14_184207_normalize_categorias_and_add_codigo_to_projetos.php');
+        $limite->down();
         $normalizacao->down();
         $migracao->down();
         $id = DB::table('projetos')->insertGetId([
@@ -301,6 +335,7 @@ class AvaliacaoTest extends TestCase
         ]);
         $migracao->up();
         $normalizacao->up();
+        $limite->up();
         $projeto = Projeto::findOrFail($id);
         $this->assertEquals(8.5, $projeto->nota_final);
         $this->assertCount(2, $projeto->notas);
@@ -309,8 +344,10 @@ class AvaliacaoTest extends TestCase
 
     public function test_migracao_nao_trunca_avaliacoes_existentes_invalidas(): void
     {
+        $limite = require database_path('migrations/2026_11_17_223806_limit_project_evaluations_to_two.php');
         $migracao = require database_path('migrations/2026_11_14_174531_add_nota_final_to_projetos_table.php');
         $normalizacao = require database_path('migrations/2026_11_14_184207_normalize_categorias_and_add_codigo_to_projetos.php');
+        $limite->down();
         $normalizacao->down();
         $migracao->down();
         $id = DB::table('projetos')->insertGetId([
@@ -328,6 +365,7 @@ class AvaliacaoTest extends TestCase
             DB::table('projetos')->where('id', $id)->delete();
             $migracao->up();
             $normalizacao->up();
+            $limite->up();
         }
     }
 

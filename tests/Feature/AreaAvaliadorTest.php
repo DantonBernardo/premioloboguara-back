@@ -56,15 +56,44 @@ class AreaAvaliadorTest extends TestCase
         }
     }
 
+    public function test_historico_ordena_pela_data_da_propria_avaliacao_antes_de_paginar(): void
+    {
+        $usuario = $this->avaliador();
+        $outro = $this->avaliador();
+        $esperados = [];
+        foreach (range(0, 11) as $minutos) {
+            $projeto = Projeto::factory()->create([
+                'avaliador_ids' => [$usuario->id, $outro->id],
+                'notas' => [
+                    $this->nota($usuario->id) + ['enviada_em' => now()->subMinutes($minutos)->toISOString()],
+                    $this->nota($outro->id) + ['enviada_em' => now()->addMinutes($minutos)->toISOString()],
+                ],
+            ]);
+            $esperados[] = $projeto->id;
+        }
+        $legado = Projeto::factory()->create([
+            'avaliador_ids' => [$usuario->id], 'notas' => [$this->nota($usuario->id)],
+            'updated_at' => now()->subMonth(),
+        ]);
+        $esperados[] = $legado->id;
+        Projeto::factory()->create(['avaliador_ids' => [$usuario->id]]);
+        $pagina = $this->actingAs($usuario)->getJson('/api/avaliador/projetos?status=avaliados')->assertOk()->assertJsonPath('projetos.total', 13);
+        $this->assertSame(array_slice($esperados, 0, 10), array_column($pagina->json('projetos.data'), 'id'));
+        $pagina = $this->getJson('/api/avaliador/projetos?status=avaliados&page=2')->assertOk();
+        $this->assertSame(array_slice($esperados, 10), array_column($pagina->json('projetos.data'), 'id'));
+    }
+
     public function test_envio_publica_a_propria_nota_e_reenvio_nao_altera_avaliacoes_nem_media(): void
     {
         $usuario = $this->avaliador();
         $outro = $this->avaliador();
-        $projeto = Projeto::factory()->create(['avaliador_ids' => [$usuario->id, $outro->id], 'notas' => [$this->nota($outro->id)]]);
-        $this->actingAs($usuario)->getJson('/api/avaliador/projetos/'.$projeto->id)->assertOk()->assertJsonPath('avaliacao', null)->assertJsonMissingPath('projeto.notas')->assertJsonMissingPath('projeto.nota_final');
+        $documentoUrl = 'https://drive.google.com/file/d/documento-designado/view';
+        $projeto = Projeto::factory()->create(['documento_url' => $documentoUrl, 'avaliador_ids' => [$usuario->id, $outro->id], 'notas' => [$this->nota($outro->id)]]);
+        $this->actingAs($usuario)->getJson('/api/avaliador/projetos/'.$projeto->id)->assertOk()->assertJsonPath('projeto.documento_url', $documentoUrl)->assertJsonPath('avaliacao', null)->assertJsonMissingPath('projeto.notas')->assertJsonMissingPath('projeto.nota_final');
         $dados = $this->nota($usuario->id);
         unset($dados['avaliador_id']);
         $this->putJson('/api/avaliador/projetos/'.$projeto->id.'/avaliacao', $dados)->assertOk()->assertJsonPath('avaliacao.total', 8);
+        $this->assertNotEmpty($projeto->fresh()->notas[1]['enviada_em']);
         $estado = $projeto->fresh()->getAttributes();
         $dados['c1'] = 3;
         $dados['justificativa_geral'] = 'Tentativa de alterar uma avaliação publicada.';

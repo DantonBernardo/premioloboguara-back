@@ -48,6 +48,7 @@ class ProjetoController extends Controller
                 'id' => $projeto->id, 'codigo' => $projeto->codigo, 'nome' => $projeto->nome,
                 'categoria' => $categoria->nome, 'categoria_codigo' => $categoria->codigo,
                 'subcategoria' => $projeto->subcategoria->nome,
+                'documento_url' => $projeto->documento_url,
                 'nota_final' => $projeto->nota_final, 'avaliacoes_recebidas' => $notas->count(),
                 'status' => $status, 'status_rotulo' => Relatorios::STATUS[$status],
                 'zero_eliminatorio' => $zero, 'criado_em' => $projeto->created_at?->toIso8601String(),

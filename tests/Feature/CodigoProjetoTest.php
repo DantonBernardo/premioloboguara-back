@@ -181,7 +181,7 @@ class CodigoProjetoTest extends TestCase
     {
         $projeto = Projeto::factory()->create(['notas' => [['avaliador_id' => 1, 'c1' => 3, 'c2' => 2, 'c3' => 2, 'c4' => 2]]]);
         $id = $projeto->id;
-        $notas = $projeto->notas;
+        $notas = $projeto->fresh()->notas;
         $migracao = require database_path('migrations/2026_11_14_184207_normalize_categorias_and_add_codigo_to_projetos.php');
         $migracao->down();
         $this->assertSame('Projeto Inovador', DB::table('projetos')->where('id', $id)->value('categoria'));
